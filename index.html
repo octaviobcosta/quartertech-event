@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuarterTech - Save the Date</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, #daa520 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(218, 165, 32, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #cccccc;
+            margin-bottom: 3rem;
+            letter-spacing: 0.05em;
+        }
+
+        .event-details {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-details::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(218, 165, 32, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .event-info {
+            position: relative;
+            z-index: 1;
+        }
+
+        .date {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #daa520;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(218, 165, 32, 0.5);
+        }
+
+        .location {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            font-size: 1rem;
+            color: #b0b0b0;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .sponsors-section {
+            margin-top: 3rem;
+        }
+
+        .sponsors-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: #daa520;
+            text-shadow: 0 0 20px rgba(218, 165, 32, 0.3);
+        }
+
+        .sponsors-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            align-items: center;
+            justify-items: center;
+            row-gap: 3.5rem;
+        }
+
+        .logo-slot {
+            width: 220px;
+            height: 110px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #606060;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-slot::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(45deg, transparent, rgba(218, 165, 32, 0.05), transparent);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+        }
+
+        .logo-slot:hover::before {
+            top: -50%;
+            left: -50%;
+            opacity: 1;
+        }
+
+        .logo-slot:hover {
+            background: rgba(218, 165, 32, 0.03);
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.1);
+        }
+        
+        .logo-slot img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: brightness(0.9) contrast(1.1);
+            transition: all 0.4s ease;
+        }
+        
+        .logo-slot:hover img {
+            filter: brightness(1.1) contrast(1.2);
+            transform: scale(1.05);
+        }
+
+        .cta-section {
+            margin-top: 3rem;
+            position: relative;
+        }
+
+        .cta {
+            font-size: 1.2rem;
+            color: #daa520;
+            animation: pulse 2s infinite;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .qr-code {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .qr-code canvas {
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .sponsors-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+            
+            .logo-slot {
+                width: 180px;
+                height: 90px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .sponsors-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .logo-slot {
+                width: 200px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">QuarterTech</h1>
+            <p class="subtitle">Save the Date</p>
+        </div>
+
+        <div class="event-details">
+            <div class="event-info">
+                <div class="date">30 de Julho, 2025</div>
+                <div class="location">Local: A definir</div>
+                <div class="description">
+                    Um evento tecnológico que vai reunir os principais players do mercado para discutir o futuro da tecnologia e inovação.
+                </div>
+            </div>
+        </div>
+
+        <div class="sponsors-section">
+            <h2 class="sponsors-title">Patrocinadores</h2>
+            <div class="sponsors-grid">
+                <div class="logo-slot">
+                    <img src="logoB.png" alt="Logo B">
+                </div>
+                <div class="logo-slot">
+                    <img src="logofbcor.png" alt="Logo FB">
+                </div>
+                <div class="logo-slot">
+                    <img src="logofablab.png" alt="Logo FabLab">
+                </div>
+                <div class="logo-slot">
+                    <img src="Blue.me.png" alt="Blue.me">
+                </div>
+                <div class="logo-slot">
+                    <img src="estaff_logo_transparent.png" alt="eStaff">
+                </div>
+                <div class="logo-slot">
+                    <img src="Imagem do WhatsApp de 2025-07-08 à(s) 19.16.37_fd7c4a3f_clipped_rev_1.png" alt="WhatsApp Logo">
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <div class="cta">Mais informações em breve!</div>
+            <div class="qr-code">
+                <canvas id="qrcode"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script>
+        // Gerar QR Code
+        const canvas = document.getElementById('qrcode');
+        QRCode.toCanvas(canvas, 'https://quartertech.com', {
+            width: 130,
+            margin: 1,
+            color: {
+                dark: '#000000',
+                light: '#ffffff'
+            }
+        });
+    </script>
+</body>
+</html>

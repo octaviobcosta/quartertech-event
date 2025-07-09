@@ -1,0 +1,17 @@
+# Arquivos com secrets
+.env
+.mcp.json
+
+# Arquivos temporários
+*_base64.txt
+insert_logos.js
+deploy*.sh
+deploy*.bat
+arquivos_para_upload.txt
+
+# Arquivos antigos
+QuarterTech_SaveTheDate*.html
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
