@@ -4,334 +4,424 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuarterTech - Save the Date</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
             color: #ffffff;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: relative;
             overflow-x: hidden;
+            position: relative;
+            scroll-behavior: smooth;
         }
-
+        
         .container {
             max-width: 1200px;
-            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
             text-align: center;
-            position: relative;
-            z-index: 2;
         }
 
-        .header {
-            margin-bottom: 2rem;
-            position: relative;
+        /* Logo QuarterTech */
+        .logo-container {
+            margin-bottom: 20px;
         }
 
-        .title {
-            font-size: 3.5rem;
+        .logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4rem;
             font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ffffff 0%, #daa520 100%);
+            background: linear-gradient(135deg, #daa520, #ffd700, #daa520);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 30px rgba(218, 165, 32, 0.3);
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            font-weight: 300;
-            color: #cccccc;
-            margin-bottom: 3rem;
-            letter-spacing: 0.05em;
-        }
-
-        .event-details {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            backdrop-filter: blur(10px);
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
             position: relative;
-            overflow: hidden;
         }
 
-        .event-details::before {
-            content: '';
+        .logo-text::after {
+            content: '✦';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(218, 165, 32, 0.1) 0%, transparent 70%);
-            animation: pulse 4s ease-in-out infinite;
+            top: -10px;
+            right: -20px;
+            color: #daa520;
+            font-size: 1.5rem;
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
-            50% {
-                transform: scale(1.1);
-                opacity: 0.8;
-            }
+        .save-date {
+            font-size: 1rem;
+            color: #888;
+            letter-spacing: 3px;
+            margin-bottom: 60px;
+            text-transform: uppercase;
         }
 
+        /* Info do evento */
         .event-info {
-            position: relative;
-            z-index: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(218, 165, 32, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .date {
+        .event-date {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .event-datetime {
             font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        .event-location-label {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .event-location {
+            font-size: 1.8rem;
             font-weight: 600;
             color: #daa520;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 20px rgba(218, 165, 32, 0.5);
+            margin-bottom: 30px;
         }
 
-        .location {
-            font-size: 1.2rem;
-            color: #e0e0e0;
-            margin-bottom: 1rem;
-        }
-
-        .description {
+        .event-subtitle {
             font-size: 1rem;
-            color: #b0b0b0;
-            line-height: 1.6;
-            max-width: 600px;
-            margin: 0 auto;
+            color: #ccc;
+            margin-bottom: 20px;
         }
 
+        .event-topics {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .topic {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #daa520;
+        }
+
+        .topic::before {
+            content: '●';
+            color: #daa520;
+        }
+
+        /* Countdown Timer */
+        .countdown-section {
+            margin: 80px 0;
+        }
+
+        .countdown-title {
+            font-size: 1.2rem;
+            color: #daa520;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(218, 165, 32, 0.2);
+            border-radius: 10px;
+            padding: 30px 20px;
+            min-width: 120px;
+        }
+
+        .countdown-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #daa520;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Empresas Participantes */
         .sponsors-section {
-            margin-top: 3rem;
+            margin: 80px 0;
         }
 
         .sponsors-title {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
+            font-size: 1.2rem;
             color: #daa520;
-            text-shadow: 0 0 20px rgba(218, 165, 32, 0.3);
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
 
         .sponsors-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
             align-items: center;
-            justify-items: center;
-            row-gap: 3.5rem;
         }
 
-        .logo-slot {
-            width: 220px;
-            height: 110px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
+        .sponsor-logo {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
-            color: #606060;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            padding: 1.5rem;
-            backdrop-filter: blur(10px);
+            height: 100px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
         }
 
-        .logo-slot::before {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 300%;
-            height: 300%;
-            background: linear-gradient(45deg, transparent, rgba(218, 165, 32, 0.05), transparent);
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
+        .sponsor-logo:hover {
+            background: rgba(218, 165, 32, 0.05);
+            border-color: rgba(218, 165, 32, 0.3);
+            transform: translateY(-3px);
         }
 
-        .logo-slot:hover::before {
-            top: -50%;
-            left: -50%;
-            opacity: 1;
-        }
-
-        .logo-slot:hover {
-            background: rgba(218, 165, 32, 0.03);
-            border: 1px solid rgba(218, 165, 32, 0.3);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.1);
-        }
-        
-        .logo-slot img {
+        .sponsor-logo img {
             max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            filter: brightness(0.9) contrast(1.1);
-            transition: all 0.4s ease;
-        }
-        
-        .logo-slot:hover img {
-            filter: brightness(1.1) contrast(1.2);
-            transform: scale(1.05);
+            max-height: 60px;
+            filter: brightness(0.9);
+            transition: filter 0.3s ease;
         }
 
-        .cta-section {
-            margin-top: 3rem;
-            position: relative;
+        .sponsor-logo:hover img {
+            filter: brightness(1.1);
         }
 
-        .cta {
+        /* QR Code Section */
+        .qr-section {
+            margin: 80px 0 40px 0;
+        }
+
+        .qr-title {
             font-size: 1.2rem;
             color: #daa520;
-            animation: pulse 2s infinite;
+            margin-bottom: 30px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            display: block;
-            margin-bottom: 1.5rem;
+            letter-spacing: 3px;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+        .qr-container {
+            display: inline-block;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
         }
 
         .qr-code {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto;
+            width: 200px;
+            height: 200px;
             background: #ffffff;
-            padding: 10px;
-            border-radius: 10px;
+            border: 2px solid #ddd;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
-            color: #333;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            font-size: 1.2rem;
+            color: #daa520;
+            font-weight: 600;
         }
 
-        .qr-code canvas {
-            border-radius: 5px;
+        .qr-subtitle {
+            font-size: 0.9rem;
+            color: #888;
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
-            .title {
-                font-size: 2.5rem;
+            .logo-text {
+                font-size: 3rem;
             }
-            
-            .subtitle {
-                font-size: 1.2rem;
+
+            .event-datetime {
+                font-size: 2rem;
             }
-            
+
+            .event-location {
+                font-size: 1.5rem;
+            }
+
+            .countdown {
+                gap: 20px;
+            }
+
+            .countdown-number {
+                font-size: 3rem;
+            }
+
             .sponsors-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 2rem;
+                gap: 30px;
             }
-            
-            .logo-slot {
-                width: 180px;
-                height: 90px;
+
+            .event-topics {
+                flex-direction: column;
+                gap: 15px;
             }
         }
 
         @media (max-width: 480px) {
-            .title {
-                font-size: 2rem;
-            }
-            
             .sponsors-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 20px;
             }
-            
-            .logo-slot {
-                width: 200px;
-                height: 100px;
+
+            .countdown {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1 class="title">QuarterTech</h1>
-            <p class="subtitle">Save the Date</p>
+        <!-- Logo QuarterTech -->
+        <div class="logo-container">
+            <h1 class="logo-text">QuarterTech</h1>
+            <p class="save-date">SAVE THE DATE</p>
         </div>
 
-        <div class="event-details">
-            <div class="event-info">
-                <div class="date">30 de Julho, 2025</div>
-                <div class="location">Local: A definir</div>
-                <div class="description">
-                    Um evento tecnológico que vai reunir os principais players do mercado para discutir o futuro da tecnologia e inovação.
+        <!-- Info do Evento -->
+        <div class="event-info">
+            <div class="event-date">DATA</div>
+            <div class="event-datetime">15/07 14:00 - 18:00</div>
+            
+            <div class="event-location-label">LOCAL</div>
+            <div class="event-location">Bar Brahma</div>
+            
+            <div class="event-subtitle">Principais objetivos do encontro:</div>
+            
+            <div class="event-topics">
+                <div class="topic">Resultados do Quarter</div>
+                <div class="topic">Metas e Objetivos</div>
+                <div class="topic">Novos Produtos</div>
+            </div>
+            
+            <div class="event-topics">
+                <div class="topic">Tendências do Mercado</div>
+            </div>
+        </div>
+
+        <!-- Countdown Timer -->
+        <div class="countdown-section">
+            <h2 class="countdown-title">FALTAM APENAS</h2>
+            <div class="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">06</div>
+                    <div class="countdown-label">DIAS</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">15</div>
+                    <div class="countdown-label">HORAS</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">MINUTOS</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">02</div>
+                    <div class="countdown-label">SEGUNDOS</div>
                 </div>
             </div>
         </div>
 
+        <!-- Empresas Participantes -->
         <div class="sponsors-section">
-            <h2 class="sponsors-title">Patrocinadores</h2>
+            <h2 class="sponsors-title">EMPRESAS PARTICIPANTES</h2>
             <div class="sponsors-grid">
-                <div class="logo-slot">
-                    <img src="logoB.png" alt="Logo B">
+                <div class="sponsor-logo">
+                    <img src="Imagem do WhatsApp de 2025-07-08 à(s) 19.16.37_fd7c4a3f_clipped_rev_1.png" alt="WTT eshows">
                 </div>
-                <div class="logo-slot">
-                    <img src="logofbcor.png" alt="Logo FB">
+                <div class="sponsor-logo">
+                    <img src="logofablab.png" alt="Fabrica Lab">
                 </div>
-                <div class="logo-slot">
-                    <img src="logofablab.png" alt="Logo FabLab">
+                <div class="sponsor-logo">
+                    <img src="estaff_logo_transparent.png" alt="estaff">
                 </div>
-                <div class="logo-slot">
+                <div class="sponsor-logo">
                     <img src="Blue.me.png" alt="Blue.me">
                 </div>
-                <div class="logo-slot">
-                    <img src="estaff_logo_transparent.png" alt="eStaff">
+                <div class="sponsor-logo">
+                    <img src="logofbcor.png" alt="FAB LAB">
                 </div>
-                <div class="logo-slot">
-                    <img src="Imagem do WhatsApp de 2025-07-08 à(s) 19.16.37_fd7c4a3f_clipped_rev_1.png" alt="WhatsApp Logo">
+                <div class="sponsor-logo">
+                    <img src="logoB.png" alt="Spaces">
                 </div>
             </div>
         </div>
 
-        <div class="cta-section">
-            <div class="cta">Mais informações em breve!</div>
-            <div class="qr-code">
-                <canvas id="qrcode"></canvas>
+        <!-- QR Code -->
+        <div class="qr-section">
+            <h2 class="qr-title">RESERVE SUA AGENDA!</h2>
+            <div class="qr-container">
+                <div class="qr-code">QR CODE</div>
             </div>
+            <p class="qr-subtitle">Adicione seu QR Code aqui</p>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <script>
-        // Gerar QR Code
-        const canvas = document.getElementById('qrcode');
-        QRCode.toCanvas(canvas, 'https://quartertech.com', {
-            width: 130,
-            margin: 1,
-            color: {
-                dark: '#000000',
-                light: '#ffffff'
+        // Countdown Timer
+        function updateCountdown() {
+            const eventDate = new Date('2025-07-15T14:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
             }
-        });
+        }
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Initial call
     </script>
 </body>
 </html>
