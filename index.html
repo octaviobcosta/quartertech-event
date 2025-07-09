@@ -6,7 +6,7 @@
     <title>QuarterTech - Save the Date</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,693 +14,742 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F4E5C2;
+            --gold-dark: #B8941F;
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #141414;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0A0;
+            --border-subtle: rgba(212, 175, 55, 0.1);
+        }
+
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0a0a0a;
-            color: #ffffff;
-            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             overflow-x: hidden;
             position: relative;
-            scroll-behavior: smooth;
-            cursor: crosshair;
-        }
-        
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(218, 165, 32, 0.02) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 1;
         }
 
-        /* Background grafite escuro com tech */
-        .tech-background {
+        /* Fixed Header with Countdown */
+        .header-fixed {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
-            z-index: -2;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 1000;
+            padding: 20px 0;
         }
 
-        .grid-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(218, 165, 32, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(218, 165, 32, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            animation: grid-move 20s linear infinite;        }
-
-        @keyframes grid-move {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* Logo customizado QuarterTech */
-        .logo-container {
-            display: inline-block;
-            margin-bottom: 1rem;
+        /* Logo Design com proporções douradas */
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-mark {
+            width: 40px;
+            height: 40px;
             position: relative;
+        }
+
+        .logo-diamond {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .diamond-outer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            transform: rotate(45deg);
+            border-radius: 2px;
+        }
+
+        .diamond-inner {
+            position: absolute;
+            width: 62%;
+            height: 62%;
+            background: var(--bg-primary);
+            transform: rotate(45deg);
+            top: 19%;
+            left: 19%;
+            border-radius: 1px;
+        }
+
+        .diamond-core {
+            position: absolute;
+            width: 38%;
+            height: 38%;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            transform: rotate(45deg);
+            top: 31%;
+            left: 31%;
+            border-radius: 1px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
         }
 
         .logo-text {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 4.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #daa520, #ffd700, #daa520);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(218, 165, 32, 0.1);
-            animation: shimmer 4s ease-in-out infinite;
-            letter-spacing: -3px;
+        }
+
+        /* Countdown Minimalista no Header */
+        .countdown-header {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .countdown-unit {
+            text-align: center;
             position: relative;
-            transition: transform 0.3s ease;
-        }
-        
-        .logo-text:hover {
-            transform: scale(1.05);        }
-        
-        @keyframes shimmer {
-            0%, 100% { 
-                background-position: 0% 50%;
-                filter: brightness(1);
-            }
-            50% { 
-                background-position: 100% 50%;
-                filter: brightness(1.2);
-            }
         }
 
-        .logo-accent {
-            position: absolute;
-            top: -10px;
-            right: -20px;
-            width: 30px;
+        .countdown-number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: var(--gold);
+            line-height: 1;
+            letter-spacing: 1px;
+        }
+
+        .countdown-text {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        .countdown-separator {
+            width: 1px;
             height: 30px;
-            background: linear-gradient(135deg, #daa520, #ffd700);
-            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-            animation: pulse-accent 3s ease-in-out infinite;
+            background: var(--border-subtle);
         }
 
-        @keyframes pulse-accent {
-            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
-            50% { transform: scale(1.2) rotate(45deg); opacity: 1; }
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            min-height: 100vh;
+            padding: 60px 20px;
         }
-
-        /* Partículas douradas flutuantes */
-        .particles {            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #daa520;
-            border-radius: 50%;
-            opacity: 0;
-            animation: float-particle 10s infinite;
-        }
-        
-        @keyframes float-particle {
-            0% {
-                transform: translateY(100px) translateX(0) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(-100px) translateX(100px) scale(1.5);
-                opacity: 0;
-            }        }
 
         .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
-        .save-the-date {
+        /* Hero Section */
+        .hero {
             text-align: center;
-            max-width: 900px;
-            width: 100%;
+            margin-bottom: 80px;
+            position: relative;
         }
 
-        .subtitle {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 300;
-            color: #daa520;
-            margin-bottom: 4rem;
-            letter-spacing: 6px;
+        .hero-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 200;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-title span {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            letter-spacing: 4px;
             text-transform: uppercase;
-            opacity: 0.9;
+            font-weight: 300;
         }
 
-        .event-info {            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            padding: 4rem;
-            margin-bottom: 4rem;
-            backdrop-filter: blur(20px);
-            box-shadow: 
-                0 20px 50px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        /* Event Info - Design Elegante */
+        .event-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 60px;
+            margin-bottom: 60px;
             position: relative;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .event-info:hover {
-            transform: translateY(-5px);
-            box-shadow: 
-                0 30px 60px rgba(218, 165, 32, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
-        .event-info::before {
+        .event-card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(218, 165, 32, 0.05) 0%, transparent 70%);
-            animation: pulse-bg 4s ease-in-out infinite;        }
-
-        @keyframes pulse-bg {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0.3;
         }
 
-        .date-time {
-            font-size: 2.8rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .event-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(212, 175, 55, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .event-item:hover {
+            background: rgba(212, 175, 55, 0.04);
+            border-color: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .event-label {
+            font-size: 0.75rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .event-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .event-location {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.03), transparent);
+            border-radius: 16px;
+        }
+
+        .location-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--gold);
+        }
+
+        /* Objectives - Design Limpo */
+        .objectives {
+            margin-top: 40px;
+        }
+
+        .objectives-title {
+            text-align: center;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .objective-item {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 2rem;
-            color: #ffffff;
-            position: relative;
-            z-index: 1;
-        }
-
-        .date, .time {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .date-label, .time-label {
-            font-size: 0.8rem;
-            color: #c0c0c0;
-            text-transform: uppercase;
-            letter-spacing: 1px;            margin-bottom: 0.5rem;
-        }
-
-        .location {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(218, 165, 32, 0.2);
-            position: relative;
-            z-index: 1;
-        }
-
-        .location-label {
-            font-size: 0.8rem;
-            color: #c0c0c0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .location-name {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #daa520;
-        }
-
-        .description {
-            font-size: 1.1rem;
-            color: #e0e0e0;
-            line-height: 1.8;
-            margin-top: 2rem;
-            position: relative;            z-index: 1;
-        }
-
-        .event-topics {
-            margin-top: 2rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .topic {
-            background: rgba(218, 165, 32, 0.1);
-            border: 1px solid rgba(218, 165, 32, 0.3);
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            color: #ffd700;
+            gap: 12px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
         }
 
-        .topic:hover {
-            background: rgba(218, 165, 32, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(218, 165, 32, 0.2);
+        .objective-item:hover {
+            background: rgba(212, 175, 55, 0.03);
+            border-color: rgba(212, 175, 55, 0.1);
+            transform: translateX(4px);
         }
 
-        /* Countdown Timer Premium */
-        .countdown-container {            margin: 4rem 0;
-            padding: 3rem;
-            background: linear-gradient(135deg, 
-                rgba(218, 165, 32, 0.03) 0%, 
-                rgba(255, 255, 255, 0.01) 50%, 
-                rgba(218, 165, 32, 0.03) 100%);
-            border-radius: 30px;
-            border: 1px solid rgba(218, 165, 32, 0.15);
-            backdrop-filter: blur(20px);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 
-                0 20px 50px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
-        }
-        
-        .countdown-container::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #daa520, transparent, #daa520);
-            border-radius: 30px;
-            opacity: 0;
-            z-index: -1;
-            transition: opacity 0.3s ease;
-        }
-                .countdown-container:hover::before {
-            opacity: 0.3;
-        }
-
-        .countdown-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.2rem;
-            color: #daa520;
-            margin-bottom: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            text-align: center;
-            font-weight: 300;
-        }
-
-        .countdown {
+        .objective-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 8px;
             display: flex;
-            gap: 2.5rem;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
+            font-size: 1rem;
         }
 
-        .countdown-item {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(218, 165, 32, 0.2);
-            border-radius: 20px;
-            padding: 2rem 2.5rem;
+        .objective-text {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: 400;
+        }
+
+        /* Companies Section */
+        .companies-section {
+            margin: 80px 0;
+        }
+
+        .section-header {
             text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 400;
             position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;            min-width: 120px;
+            display: inline-block;
+            padding: 0 30px;
         }
-        
-        .countdown-item:hover {
-            transform: translateY(-5px);
-            border-color: #daa520;
-            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.2);
-        }
-        
-        .countdown-item::before {
+
+        .section-title::before,
+        .section-title::after {
             content: '';
             position: absolute;
+            top: 50%;
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold));
+        }
+
+        .section-title::before {
+            right: 100%;
+        }
+
+        .section-title::after {
+            left: 100%;
+            transform: rotate(180deg);
+        }
+
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .company-card {
+            aspect-ratio: 16/9;
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .company-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1), transparent);
+            transition: all 0.6s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .company-card:hover::before {
+            width: 200%;
+            height: 200%;
+        }
+
+        .company-card:hover {
+            border-color: rgba(212, 175, 55, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .company-card img {
+            max-width: 80%;
+            max-height: 60px;
+            object-fit: contain;
+            filter: brightness(0.9) grayscale(0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .company-card:hover img {
+            filter: brightness(1.1) grayscale(0);
+            transform: scale(1.05);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            margin: 100px 0 60px;
+        }
+
+        .cta-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: var(--gold);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 400;
+        }
+
+        .qr-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 40px;
+            background: transparent;
+            border: 1px solid var(--gold);
+            border-radius: 50px;
+            color: var(--gold);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .qr-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--gold);
+            border-radius: 50%;
+            transition: all 0.5s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .qr-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .qr-button:hover {
+            color: var(--bg-primary);
+            transform: translateY(-2px);
+        }
+
+        .qr-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Background Pattern */
+        .bg-pattern {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(218, 165, 32, 0.1) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .countdown-item:hover::before {
-            opacity: 1;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 0;
         }
 
-        .countdown-value {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: #daa520;
-            display: block;            line-height: 1;
-            position: relative;
-            z-index: 1;
-            transition: transform 0.3s ease;
-        }
-        
-        .countdown-item:hover .countdown-value {
-            transform: scale(1.1);
+        .pattern-grid {
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--gold) 1px, transparent 1px),
+                linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+            background-size: 60px 60px;
         }
 
-        .countdown-label {
-            font-size: 0.9rem;
-            color: #a0a0a0;
-            text-transform: uppercase;
-            margin-top: 0.8rem;
-            letter-spacing: 2px;
-            font-weight: 300;
-            position: relative;
-            z-index: 1;
-        }
-
-        .logos-container {
-            background: linear-gradient(135deg, rgba(15, 15, 15, 0.8), rgba(25, 25, 25, 0.6));
-            border-radius: 30px;
-            padding: 4rem 3rem;
-            margin-top: 4rem;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(218, 165, 32, 0.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;        }
-
-        .logos-title {
-            font-size: 1.1rem;
-            color: #daa520;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 3rem;
-            text-align: center;
-            font-weight: 300;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-        
-        .logos-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #daa520, transparent);
-        }
-
-        .logos-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
-            align-items: center;
-            justify-items: center;            row-gap: 3.5rem;
-        }
-
-        .logo-slot {
-            width: 220px;
-            height: 110px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            color: #606060;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            padding: 1.5rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .logo-slot::before {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 300%;
-            height: 300%;
-            background: linear-gradient(45deg, transparent, rgba(218, 165, 32, 0.05), transparent);
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;        }
-
-        .logo-slot:hover::before {
-            top: -50%;
-            left: -50%;
-            opacity: 1;
-        }
-
-        .logo-slot:hover {
-            background: rgba(218, 165, 32, 0.03);
-            border: 1px solid rgba(218, 165, 32, 0.3);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.1);
-        }
-        
-        .logo-slot img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            filter: brightness(0.9) contrast(1.1);
-            transition: all 0.4s ease;
-        }
-        
-        .logo-slot:hover img {
-            filter: brightness(1.1) contrast(1.2);
-            transform: scale(1.05);
-        }
-
-        .cta-section {
-            margin-top: 3rem;
-            position: relative;        }
-
-        .cta {
-            font-size: 1.2rem;
-            color: #daa520;
-            animation: pulse 2s infinite;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: block;
-            margin-bottom: 1.5rem;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-
-        .qr-code {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 10px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            color: #333;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-        .qr-code canvas {
-            border-radius: 5px;
-        }
-
-        /* Data Visualization Animation */
-        .data-visual {
+        /* Floating Elements */
+        .float-element {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 100px;
-            height: 100px;
-            opacity: 0.3;
+            width: 60px;
+            height: 60px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            animation: float-diagonal 20s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        .data-bar {
-            position: absolute;
-            bottom: 0;
-            width: 15px;
-            background: linear-gradient(180deg, #daa520, #ffd700);
-            animation: data-flow 3s ease-in-out infinite;
+        .float-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
         }
 
-        .data-bar:nth-child(1) { left: 10px; height: 40%; animation-delay: 0s; }
-        .data-bar:nth-child(2) { left: 30px; height: 70%; animation-delay: 0.5s; }
-        .data-bar:nth-child(3) { left: 50px; height: 55%; animation-delay: 1s; }
-        .data-bar:nth-child(4) { left: 70px; height: 85%; animation-delay: 1.5s; }
-
-        @keyframes data-flow {
-            0%, 100% { transform: scaleY(1); opacity: 0.3; }
-            50% { transform: scaleY(1.2); opacity: 0.8; }
+        .float-element:nth-child(2) {
+            top: 60%;
+            right: 10%;
+            animation-delay: 7s;
         }
-        /* Responsivo */
+
+        .float-element:nth-child(3) {
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 14s;
+        }
+
+        @keyframes float-diagonal {
+            0%, 100% { transform: translate(0, 0) rotate(45deg); }
+            25% { transform: translate(30px, -30px) rotate(90deg); }
+            50% { transform: translate(-20px, 20px) rotate(180deg); }
+            75% { transform: translate(20px, 30px) rotate(270deg); }
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .logo-text {
-                font-size: 2.5rem;
-            }
-            
-            .logo-accent {
-                width: 20px;
-                height: 20px;
-                top: -5px;
-                right: -10px;
-            }
-            
-            .date-time {
+            .header-content {
                 flex-direction: column;
-                gap: 1rem;
-                font-size: 2rem;
+                gap: 20px;
             }
-            
-            .logos-grid {
+
+            .countdown-header {
+                gap: 20px;
+            }
+
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .event-card {
+                padding: 40px 20px;
+            }
+
+            .event-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .companies-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .company-card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .countdown-header {
+                gap: 15px;
+            }
+
+            .countdown-number {
+                font-size: 1.2rem;
+            }
+
+            .countdown-text {
+                font-size: 0.6rem;
+            }
+
+            .companies-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="tech-background"></div>
-    <div class="grid-overlay"></div>
+    <!-- Background Pattern -->
+    <div class="bg-pattern">
+        <div class="pattern-grid"></div>
+    </div>
 
-    <div class="container">
-        <div class="save-the-date">            <div class="logo-container">
-                <h1 class="logo-text">QuarterTech</h1>
-                <div class="logo-accent"></div>
-            </div>
-            <p class="subtitle">Save the Date</p>
-            
-            <div class="event-info">
-                <div class="date-time">
-                    <div class="date">
-                        <span class="date-label">Data</span>
-                        <span>15/07</span>
+    <!-- Floating Elements -->
+    <div class="float-element"></div>
+    <div class="float-element"></div>
+    <div class="float-element"></div>
+
+    <!-- Fixed Header with Countdown -->
+    <header class="header-fixed">
+        <div class="header-content">
+            <div class="logo-wrapper">
+                <div class="logo-mark">
+                    <div class="logo-diamond">
+                        <div class="diamond-outer"></div>
+                        <div class="diamond-inner"></div>
+                        <div class="diamond-core"></div>
                     </div>
-                    <div class="time">
-                        <span class="time-label">Horário</span>
-                        <span>14:00 - 18:00</span>
-                    </div>
                 </div>
-                
-                <div class="location">
-                    <span class="location-label">Local</span>
-                    <span class="location-name">Bar Brahma</span>
-                </div>
-
-                <p class="description">
-                    Principais objetivos do encontro:
-                </p>
-
-                <div class="event-topics">
-                    <div class="topic">📊 Resultados do Quarter</div>
-                    <div class="topic">🎯 Metas e Objetivos</div>
-                    <div class="topic">🚀 Novos Produtos</div>                    <div class="topic">💡 Tendências do Mercado</div>
-                </div>
+                <div class="logo-text">QuarterTech</div>
             </div>
 
-            <!-- Countdown Timer -->
-            <div class="countdown-container">
-                <div class="countdown-title">Faltam apenas</div>
-                <div class="countdown" id="countdown">
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="days">00</span>
-                        <span class="countdown-label">Dias</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="hours">00</span>
-                        <span class="countdown-label">Horas</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="minutes">00</span>
-                        <span class="countdown-label">Minutos</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="seconds">00</span>
-                        <span class="countdown-label">Segundos</span>
-                    </div>
+            <div class="countdown-header" id="countdown-header">
+                <div class="countdown-unit">
+                    <div class="countdown-number" id="days-header">00</div>
+                    <div class="countdown-text">Dias</div>
+                </div>
+                <div class="countdown-separator"></div>
+                <div class="countdown-unit">
+                    <div class="countdown-number" id="hours-header">00</div>
+                    <div class="countdown-text">Horas</div>
+                </div>
+                <div class="countdown-separator"></div>
+                <div class="countdown-unit">
+                    <div class="countdown-number" id="minutes-header">00</div>
+                    <div class="countdown-text">Min</div>
+                </div>
+                <div class="countdown-separator"></div>
+                <div class="countdown-unit">
+                    <div class="countdown-number" id="seconds-header">00</div>
+                    <div class="countdown-text">Seg</div>
                 </div>
             </div>
+        </div>
+    </header>
 
-            <div class="logos-container">
-                <h3 class="logos-title">Empresas Participantes</h3>
-                <div class="logos-grid">                    <div class="logo-slot">
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1 class="hero-title">
+                    <span>QuarterTech</span>
+                </h1>
+                <p class="hero-subtitle">Save the Date</p>
+            </section>
+
+            <!-- Event Information -->
+            <section class="event-card">
+                <div class="event-grid">
+                    <div class="event-item">
+                        <div class="event-label">Data</div>
+                        <div class="event-value">15 de Julho</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-label">Horário</div>
+                        <div class="event-value">14:00 - 18:00</div>
+                    </div>
+                    <div class="event-location">
+                        <div class="event-label">Local</div>
+                        <div class="location-value">Bar Brahma</div>
+                    </div>
+                </div>
+
+                <div class="objectives">
+                    <h3 class="objectives-title">Principais objetivos do encontro</h3>
+                    <div class="objectives-grid">
+                        <div class="objective-item">
+                            <div class="objective-icon">📊</div>
+                            <span class="objective-text">Resultados do Quarter</span>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-icon">🎯</div>
+                            <span class="objective-text">Metas e Objetivos</span>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-icon">🚀</div>
+                            <span class="objective-text">Novos Produtos</span>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-icon">💡</div>
+                            <span class="objective-text">Tendências do Mercado</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Companies Section -->
+            <section class="companies-section">
+                <div class="section-header">
+                    <h2 class="section-title">Empresas Participantes</h2>
+                </div>
+                <div class="companies-grid">
+                    <div class="company-card">
                         <img src="logoB.png" alt="eshows">
                     </div>
-                    <div class="logo-slot">
+                    <div class="company-card">
                         <img src="logofbcor.png" alt="Fábrica de Carros">
                     </div>
-                    <div class="logo-slot">
+                    <div class="company-card">
                         <img src="estaff_logo_transparent.png" alt="estaff">
                     </div>
-                    <div class="logo-slot">
+                    <div class="company-card">
                         <img src="Blue.me.png" alt="Blue.me">
                     </div>
-                    <div class="logo-slot">
+                    <div class="company-card">
                         <img src="logofablab.png" alt="FabLab">
                     </div>
-                    <div class="logo-slot">
+                    <div class="company-card">
                         <img src="Imagem do WhatsApp de 2025-07-08 à(s) 19.16.37_fd7c4a3f_clipped_rev_1.png" alt="espaces">
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="cta-section">
-                <p class="cta">Reserve sua agenda!</p>
-                <div class="qr-code" id="qrcode" style="display: flex; align-items: center; justify-content: center; min-height: 150px;">
-                    <div style="text-align: center;">
-                        <div style="width: 130px; height: 130px; border: 2px solid #daa520; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: white;">
-                            <span style="color: #daa520; font-size: 14px; font-weight: bold;">QR CODE</span>
-                        </div>
-                    </div>
-                </div>                <p style="font-size: 0.8rem; color: #888; margin-top: 1rem;">
-                    Adicione seu QR Code aqui
-                </p>
-            </div>
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <h3 class="cta-title">Reserve sua Agenda</h3>
+                <button class="qr-button" onclick="alert('QR Code em breve!')">
+                    <span>QR CODE</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                    </svg>
+                </button>
+            </section>
         </div>
-    </div>
-
-    <!-- Data Visualization Animation -->
-    <div class="data-visual">
-        <div class="data-bar"></div>
-        <div class="data-bar"></div>
-        <div class="data-bar"></div>
-        <div class="data-bar"></div>
-    </div>
+    </main>
 
     <script>
         // Countdown Timer
@@ -715,15 +764,35 @@
                 const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-                document.getElementById('days').textContent = String(days).padStart(2, '0');
-                document.getElementById('hours').textContent = String(hours).padStart(2, '0');                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+                // Update header countdown
+                document.getElementById('days-header').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours-header').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes-header').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds-header').textContent = String(seconds).padStart(2, '0');
             }
         }
 
         // Update countdown every second
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        // Smooth scroll behavior
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('.header-fixed');
+            let lastScroll = 0;
+
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll > 100) {
+                    header.style.background = 'rgba(10, 10, 10, 0.98)';
+                } else {
+                    header.style.background = 'rgba(10, 10, 10, 0.95)';
+                }
+                
+                lastScroll = currentScroll;
+            });
+        });
     </script>
 </body>
 </html>
