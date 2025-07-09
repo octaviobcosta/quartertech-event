@@ -39,6 +39,27 @@
             line-height: 1.8;
         }
         
+        /* Skip Links for Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 10px;
+            background: #B8860B;
+            color: #000;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 10000;
+            font-weight: 600;
+            transition: top 0.3s ease;
+        }
+        
+        .skip-link:focus {
+            top: 10px;
+            outline: 3px solid #D4AF37;
+            outline-offset: 2px;
+        }
+        
         /* Custom Cursor */
         .cursor {
             position: fixed;
@@ -65,13 +86,46 @@
         }
         
         .cursor.hovering {
-            transform: translate(-50%, -50%) scale(1.5);
-            background: rgba(184, 134, 11, 0.1);
+            transform: translate(-50%, -50%) scale(1.8);
+            background: rgba(184, 134, 11, 0.05);
+            border-color: #D4AF37;
+            animation: cursor-pulse 1s ease-in-out infinite;
+        }
+        
+        @keyframes cursor-pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1.8);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(2.2);
+                opacity: 0.6;
+            }
         }
         
         /* Hover Effects */
         a, button, .countdown-item, .objective-item, .logo-slot {
             cursor: none;
+        }
+        
+        /* Custom Focus States */
+        *:focus {
+            outline: none;
+        }
+        
+        button:focus-visible,
+        a:focus-visible,
+        .countdown-item:focus-visible,
+        .objective-item:focus-visible,
+        .logo-slot:focus-visible {
+            outline: 2px solid #D4AF37;
+            outline-offset: 4px;
+            transition: outline-offset 0.2s ease;
+        }
+        
+        button:focus-visible:hover,
+        a:focus-visible:hover {
+            outline-offset: 6px;
         }
         
         body::before {
@@ -109,6 +163,9 @@
             opacity: 0.4;
             filter: blur(150px);
             animation: mesh-rotate 30s ease-in-out infinite;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
         
         .mesh-gradient::before {
@@ -333,6 +390,26 @@
             }
         }
 
+        /* Scroll Progress Indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .scroll-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #B8860B, #D4AF37);
+            width: 0%;
+            transition: width 0.1s ease-out;
+            box-shadow: 0 0 10px rgba(184, 134, 11, 0.5);
+        }
+        
         /* Header Fixed com Countdown */
         .header-fixed {
             position: fixed;
@@ -442,19 +519,29 @@
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             width: 120px;
             flex: 0 0 120px;
+            min-height: 85px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
         }
         
         .header-fixed.scrolled .countdown-item {
-            padding: 0.4rem 1rem;
+            padding: 0.5rem 1rem;
             border-radius: 10px;
             width: 90px;
             flex: 0 0 90px;
+            min-height: 60px;
+            gap: 0.2rem;
         }
         
         .countdown-item:hover {
-            transform: translateY(-2px);
-            border-color: rgba(184, 134, 11, 0.3);
-            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.1);
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(184, 134, 11, 0.4);
+            box-shadow: 0 8px 25px rgba(184, 134, 11, 0.15),
+                        0 0 30px rgba(184, 134, 11, 0.1) inset;
+            background: rgba(184, 134, 11, 0.03);
         }
         
         .countdown-item::before {
@@ -480,6 +567,7 @@
             color: #B8860B;
             display: block;
             line-height: 1;
+            margin: 0;
             position: relative;
             z-index: 1;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -497,17 +585,18 @@
             font-size: 0.7rem;
             color: #a0a0a0;
             text-transform: uppercase;
-            margin-top: 0.4rem;
+            margin: 0;
             letter-spacing: 1px;
             font-weight: 300;
             position: relative;
             z-index: 1;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            line-height: 1;
         }
         
         .header-fixed.scrolled .countdown-label {
             font-size: 0.6rem;
-            margin-top: 0.2rem;
+            margin: 0;
         }
 
         /* Main Content */
@@ -592,7 +681,7 @@
         .subtitle {
             font-size: 1.1rem;
             color: #B8860B;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             letter-spacing: 8px;
             text-transform: uppercase;
             font-weight: 400;
@@ -602,16 +691,19 @@
         /* Event Info Card */
         .event-card {
             background: linear-gradient(135deg, rgba(15, 15, 15, 0.6), rgba(25, 25, 25, 0.4));
-            border: 1px solid rgba(184, 134, 11, 0.1);
+            border: 1px solid rgba(184, 134, 11, 0.15);
             border-radius: 30px;
             padding: 80px;
             margin-bottom: 100px;
             backdrop-filter: blur(20px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+                        0 0 100px rgba(184, 134, 11, 0.03) inset;
             opacity: 0;
             transform: translateY(50px) rotateX(10deg);
             transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
             transform-origin: center bottom;
+            position: relative;
+            overflow: hidden;
         }
         
         .event-card.visible {
@@ -666,12 +758,13 @@
         }
 
         .event-label {
-            font-size: 0.8rem;
-            color: #B8860B;
+            font-size: 0.85rem;
+            color: #D4AF37;
             text-transform: uppercase;
             letter-spacing: 3px;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             font-weight: 600;
+            opacity: 0.9;
         }
 
         .event-value {
@@ -772,6 +865,8 @@
             transition: all 0.5s ease;
             opacity: 0;
             transform: translateX(-30px);
+            cursor: pointer;
+            position: relative;
         }
         
         .objectives-grid.visible .objective-item {
@@ -937,10 +1032,11 @@
         }
 
         .logo-slot:hover {
-            background: rgba(184, 134, 11, 0.03);
-            border: 1px solid rgba(184, 134, 11, 0.2);
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 10px 30px rgba(184, 134, 11, 0.2);
+            background: rgba(184, 134, 11, 0.04);
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(184, 134, 11, 0.25),
+                        0 0 60px rgba(184, 134, 11, 0.1) inset;
         }
         
         .logo-slot:hover::before {
@@ -1041,8 +1137,29 @@
 
         .qr-button:hover {
             border-color: rgba(184, 134, 11, 0.6);
-            transform: translateY(-1px);
-            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(184, 134, 11, 0.15);
+        }
+        
+        /* Ripple effect */
+        .qr-button::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(184, 134, 11, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            top: var(--y, 50%);
+            left: var(--x, 50%);
+        }
+        
+        .qr-button:active::after {
+            transform: translate(-50%, -50%) scale(4);
+            opacity: 0;
+            transition: 0s;
         }
 
         .qr-button span {
@@ -1312,8 +1429,14 @@
                 padding: 0 16px;
             }
             
+            .main-content {
+                padding: 40px 16px;
+                margin-top: 80px;
+            }
+            
             .hero {
-                margin-bottom: 48px;
+                margin-bottom: 32px;
+                margin-top: -20px;
             }
             
             .event-card {
@@ -1502,7 +1625,14 @@
 
             /* Hierarquia visual simplificada - 2 níveis apenas */
             .logo-text {
-                font-size: 2.5rem;
+                font-size: 3.5rem;
+                letter-spacing: -1px;
+            }
+            
+            .subtitle {
+                font-size: 0.9rem;
+                letter-spacing: 5px;
+                margin-top: 0.5rem;
             }
             
             .event-value,
@@ -1694,6 +1824,10 @@
     </style>
 </head>
 <body>
+    <!-- Skip Links for Accessibility -->
+    <a href=\"#main-content\" class=\"skip-link\">Pular para o conteúdo principal</a>
+    <a href=\"#event-info\" class=\"skip-link\">Pular para informações do evento</a>
+    <a href=\"#companies\" class=\"skip-link\">Pular para empresas participantes</a>
     <!-- Custom Cursor -->
     <div class="cursor" id="cursor"></div>
     <div class="cursor-dot" id="cursorDot"></div>
@@ -1733,6 +1867,11 @@
     
     <!-- Particles -->
     <div class="particles-container" id="particles"></div>
+    
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar"></div>
+    </div>
 
     <!-- Fixed Header with Countdown -->
     <header class="header-fixed">
@@ -1760,7 +1899,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="main-content">
+    <main class="main-content" id="main-content">
         <div class="container">
             <!-- Hero Section -->
             <section class="hero">
@@ -1769,7 +1908,7 @@
             </section>
 
             <!-- Event Information -->
-            <section class="event-card">
+            <section class="event-card" id="event-info">
                 <div class="event-grid">
                     <div class="event-item">
                         <img src="calendars.png" alt="Data" class="event-icon-img"/>
@@ -1817,7 +1956,7 @@
             </section>
 
             <!-- Companies Section -->
-            <div class="logos-container">
+            <div class="logos-container" id="companies">
                 <h3 class="logos-title">Empresas Participantes</h3>
                 <div class="logos-carousel-wrapper">
                     <div class="logos-carousel-track">
@@ -2068,17 +2207,36 @@
             ctaObserver.observe(ctaSection);
         }
 
-        // Parallax Effect on Scroll
-        window.addEventListener('scroll', () => {
+        // Parallax Effect on Scroll with RAF optimization
+        let ticking = false;
+        function updateParallax() {
             const scrolled = window.pageYOffset;
             const dataLayer = document.getElementById('dataLayer');
             const codeLayer = document.getElementById('codeLayer');
             const grid = document.querySelector('.grid-overlay');
             
-            // Different speeds for parallax layers
-            dataLayer.style.transform = `translateY(${scrolled * 0.5}px)`;
-            codeLayer.style.transform = `translateY(${scrolled * 0.3}px)`;
-            grid.style.transform = `translateY(${scrolled * 0.1}px)`;
+            if (dataLayer && codeLayer && grid) {
+                // Different speeds for parallax layers
+                dataLayer.style.transform = `translateY(${scrolled * 0.5}px)`;
+                codeLayer.style.transform = `translateY(${scrolled * 0.3}px)`;
+                grid.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+            
+            ticking = false;
+        }
+        
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+            
+            // Update scroll progress
+            const scrollProgress = document.querySelector('.scroll-progress-bar');
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
         });
         
         // Intersection Observer for scroll animations
