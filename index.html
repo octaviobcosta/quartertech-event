@@ -1493,41 +1493,65 @@
 
             .logos-container {
                 padding: 2rem 1rem;
-                margin-top: 2rem;
-                min-height: 400px;
+                margin: 0;
+                min-height: auto;
+                background: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+                border-radius: 0 !important;
+            }
+            
+            .logos-title {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+                display: block;
+                opacity: 1;
             }
             
             .logos-carousel-wrapper {
-                margin: 1rem -16px;
+                margin: 0;
                 padding: 1.5rem 0;
-                -webkit-mask: linear-gradient(90deg, 
-                    transparent,
-                    rgba(0,0,0,1) 5%,
-                    rgba(0,0,0,1) 95%,
-                    transparent
-                );
-                mask: linear-gradient(90deg, 
-                    transparent,
-                    rgba(0,0,0,1) 5%,
-                    rgba(0,0,0,1) 95%,
-                    transparent
-                );
+                overflow: hidden;
+                width: 100vw;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
             }
             
             .logos-carousel-track {
                 gap: 2rem;
-                animation: scrollLogos 20s linear infinite;
+                animation: scrollLogos 30s linear infinite;
             }
             
             .logo-slot {
-                width: 180px;
-                height: 110px;
-                padding: 1.2rem;
+                width: 160px;
+                height: 100px;
+                padding: 1rem;
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                border-radius: 20px;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                transition: all 0.3s ease;
+            }
+            
+            .logo-slot:hover {
+                background: rgba(255, 255, 255, 0.03);
+                border-color: rgba(184, 134, 11, 0.3);
+                transform: scale(1.05);
+                box-shadow: 0 8px 25px rgba(184, 134, 11, 0.2);
             }
             
             .logo-slot img {
-                max-width: 90%;
-                max-height: 90%;
+                max-width: 100%;
+                max-height: 100%;
+                filter: brightness(1) contrast(1.1);
+            }
+            
+            .logo-slot:hover img {
+                transform: scale(1.05);
+                filter: brightness(1.1) contrast(1.15);
             }
         }
 
@@ -1551,11 +1575,12 @@
             }
 
             .logos-container {
-                padding: 2rem 1rem;
+                padding: 0;
             }
             
             .logos-carousel-wrapper {
-                margin: 1rem -1rem;
+                margin-left: calc(-50vw + 50%);
+                padding: 1.5rem 0;
             }
             
             .logos-carousel-track {
