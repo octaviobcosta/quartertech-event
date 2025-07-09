@@ -22,7 +22,42 @@
             overflow-x: hidden;
             position: relative;
             scroll-behavior: smooth;
-            cursor: crosshair;
+            cursor: none;
+        }
+        
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #daa520;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-dot {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #daa520;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+        
+        .cursor.hovering {
+            transform: translate(-50%, -50%) scale(1.5);
+            background: rgba(218, 165, 32, 0.1);
+        }
+        
+        /* Hover Effects */
+        a, button, .countdown-item, .objective-item, .logo-slot {
+            cursor: none;
         }
         
         body::before {
@@ -44,8 +79,61 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
-            z-index: -2;
+            background: #0a0a0a;
+            z-index: -5;
+            transform: translateZ(0);
+        }
+        
+        /* Animated Mesh Gradient */
+        .mesh-gradient {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            z-index: -4;
+            opacity: 0.4;
+            filter: blur(150px);
+            animation: mesh-rotate 30s ease-in-out infinite;
+        }
+        
+        .mesh-gradient::before {
+            content: '';
+            position: absolute;
+            top: 30%;
+            left: 30%;
+            width: 40%;
+            height: 40%;
+            background: radial-gradient(circle, #daa520 0%, transparent 70%);
+            animation: mesh-move-1 20s ease-in-out infinite;
+        }
+        
+        .mesh-gradient::after {
+            content: '';
+            position: absolute;
+            bottom: 30%;
+            right: 30%;
+            width: 35%;
+            height: 35%;
+            background: radial-gradient(circle, #1a1a1a 0%, transparent 70%);
+            animation: mesh-move-2 25s ease-in-out infinite;
+        }
+        
+        @keyframes mesh-rotate {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+        
+        @keyframes mesh-move-1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.2); }
+            66% { transform: translate(-50px, 50px) scale(0.8); }
+        }
+        
+        @keyframes mesh-move-2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-50px, 50px) scale(0.8); }
+            66% { transform: translate(50px, -50px) scale(1.2); }
         }
 
         .grid-overlay {
@@ -58,13 +146,93 @@
                 linear-gradient(rgba(218, 165, 32, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(218, 165, 32, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
-            z-index: -1;
+            z-index: -3;
             animation: grid-move 20s linear infinite;
+            will-change: transform;
+        }
+        
+        /* Parallax Layers */
+        .parallax-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            pointer-events: none;
+            will-change: transform;
+        }
+        
+        .parallax-layer.data-layer {
+            z-index: -2;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(218, 165, 32, 0.05) 0%, transparent 50%);
+        }
+        
+        .parallax-layer.code-layer {
+            z-index: -1;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: rgba(218, 165, 32, 0.1);
+            overflow: hidden;
+        }
+        
+        .code-line {
+            position: absolute;
+            white-space: nowrap;
+            opacity: 0;
+            animation: code-fade 20s linear infinite;
+        }
+        
+        @keyframes code-fade {
+            0%, 100% { opacity: 0; transform: translateX(-100px); }
+            50% { opacity: 0.3; transform: translateX(0); }
         }
 
         @keyframes grid-move {
             0% { transform: translate(0, 0); }
             100% { transform: translate(50px, 50px); }
+        }
+        
+        /* Particles Container */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #daa520;
+            border-radius: 50%;
+            opacity: 0;
+            animation: float-particle 15s linear infinite;
+            box-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
+        }
+        
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
         }
 
         /* Header Fixed com Countdown */
@@ -74,26 +242,39 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 20px 0;
+            padding: 0;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Countdown Container - Exatamente como no arquivo original */
+        /* Countdown Container - Full Width com Morphing */
         .countdown-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2.5rem 3rem;
+            width: 100%;
+            margin: 0;
+            padding: 1.5rem 2rem;
             background: linear-gradient(135deg, 
                 rgba(218, 165, 32, 0.03) 0%, 
                 rgba(255, 255, 255, 0.01) 50%, 
                 rgba(218, 165, 32, 0.03) 100%);
-            border-radius: 30px;
-            border: 1px solid rgba(218, 165, 32, 0.15);
+            border-radius: 0;
+            border-bottom: 1px solid rgba(218, 165, 32, 0.15);
             backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
             box-shadow: 
                 0 20px 50px rgba(0, 0, 0, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Header Scrolled State */
+        .header-fixed.scrolled .countdown-container {
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, 
+                rgba(10, 10, 10, 0.95) 0%, 
+                rgba(20, 20, 20, 0.9) 50%, 
+                rgba(10, 10, 10, 0.95) 100%);
+            border-bottom: 1px solid rgba(218, 165, 32, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
         
         .countdown-container::before {
@@ -118,11 +299,18 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: 1.2rem;
             color: #daa520;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 4px;
             text-align: center;
             font-weight: 300;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .header-fixed.scrolled .countdown-title {
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            letter-spacing: 2px;
         }
 
         .countdown {
@@ -130,18 +318,29 @@
             gap: 2.5rem;
             justify-content: center;
             flex-wrap: wrap;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .header-fixed.scrolled .countdown {
+            gap: 1.5rem;
         }
 
         .countdown-item {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(218, 165, 32, 0.2);
             border-radius: 20px;
-            padding: 1.5rem 2rem;
+            padding: 1.2rem 1.8rem;
             text-align: center;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
-            min-width: 110px;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 100px;
+        }
+        
+        .header-fixed.scrolled .countdown-item {
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            min-width: 80px;
         }
         
         .countdown-item:hover {
@@ -168,14 +367,18 @@
 
         .countdown-value {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 700;
             color: #daa520;
             display: block;
             line-height: 1;
             position: relative;
             z-index: 1;
-            transition: transform 0.3s ease;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .header-fixed.scrolled .countdown-value {
+            font-size: 1.8rem;
         }
         
         .countdown-item:hover .countdown-value {
@@ -183,22 +386,33 @@
         }
 
         .countdown-label {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #a0a0a0;
             text-transform: uppercase;
-            margin-top: 0.8rem;
+            margin-top: 0.6rem;
             letter-spacing: 2px;
             font-weight: 300;
             position: relative;
             z-index: 1;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .header-fixed.scrolled .countdown-label {
+            font-size: 0.7rem;
+            margin-top: 0.3rem;
         }
 
         /* Main Content */
         .main-content {
-            margin-top: 200px;
+            margin-top: 150px;
             padding: 60px 20px;
             position: relative;
             z-index: 1;
+            transition: margin-top 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .header-fixed.scrolled ~ .main-content {
+            margin-top: 100px;
         }
 
         .container {
@@ -210,6 +424,14 @@
         .hero {
             text-align: center;
             margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hero.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .logo-text {
@@ -224,6 +446,27 @@
             position: relative;
             display: inline-block;
             animation: subtle-shimmer 6s ease-in-out infinite;
+            opacity: 0;
+            animation: none;
+        }
+        
+        .hero.visible .logo-text {
+            opacity: 1;
+            animation: logo-reveal 1.5s ease-out forwards, subtle-shimmer 6s ease-in-out infinite 1.5s;
+        }
+        
+        @keyframes logo-reveal {
+            0% {
+                transform: scale(0.8) rotateX(90deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1) rotateX(0deg);
+            }
+            100% {
+                transform: scale(1) rotateX(0deg);
+                opacity: 1;
+            }
         }
         
         @keyframes subtle-shimmer {
@@ -256,6 +499,15 @@
             margin-bottom: 60px;
             backdrop-filter: blur(20px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(50px) rotateX(10deg);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center bottom;
+        }
+        
+        .event-card.visible {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
         }
 
         .event-grid {
@@ -348,7 +600,19 @@
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-30px);
         }
+        
+        .objectives-grid.visible .objective-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .objectives-grid.visible .objective-item:nth-child(1) { transition-delay: 0.1s; }
+        .objectives-grid.visible .objective-item:nth-child(2) { transition-delay: 0.2s; }
+        .objectives-grid.visible .objective-item:nth-child(3) { transition-delay: 0.3s; }
+        .objectives-grid.visible .objective-item:nth-child(4) { transition-delay: 0.4s; }
 
         .objective-item:hover {
             background: rgba(218, 165, 32, 0.03);
@@ -386,6 +650,14 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px) scale(0.95);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .logos-container.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
         }
 
         .logos-title {
@@ -512,10 +784,39 @@
             font-size: 0.95rem;
             font-weight: 500;
             letter-spacing: 1px;
-            cursor: pointer;
+            cursor: none;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+        }
+        
+        /* Glitch effect on hover */
+        .qr-button::after {
+            content: 'QR CODE';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #00d4ff;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-shadow: 2px 2px 0 #ff0080;
+            animation: glitch 0.3s infinite;
+            animation-play-state: paused;
+        }
+        
+        .qr-button:hover::after {
+            animation-play-state: running;
+            opacity: 0.5;
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(-50%, -50%) skew(0deg); }
+            20% { transform: translate(-48%, -50%) skew(2deg); }
+            40% { transform: translate(-52%, -50%) skew(-2deg); }
+            60% { transform: translate(-50%, -48%) skew(1deg); }
+            80% { transform: translate(-50%, -52%) skew(-1deg); }
+            100% { transform: translate(-50%, -50%) skew(0deg); }
         }
 
         .qr-button::before {
@@ -642,9 +943,21 @@
     </style>
 </head>
 <body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+    
     <!-- Background -->
     <div class="tech-background"></div>
+    <div class="mesh-gradient"></div>
     <div class="grid-overlay"></div>
+    
+    <!-- Parallax Layers -->
+    <div class="parallax-layer data-layer" id="dataLayer"></div>
+    <div class="parallax-layer code-layer" id="codeLayer"></div>
+    
+    <!-- Particles -->
+    <div class="particles-container" id="particles"></div>
 
     <!-- Fixed Header with Countdown -->
     <header class="header-fixed">
@@ -795,6 +1108,157 @@
         // Update countdown every second
         updateCountdown();
         setInterval(updateCountdown, 1000);
+        
+        // Header Morphing on Scroll
+        let lastScroll = 0;
+        const header = document.querySelector('.header-fixed');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Create Floating Particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random position
+                particle.style.left = Math.random() * 100 + '%';
+                
+                // Random animation delay
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                
+                // Random size
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Random horizontal movement
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Initialize particles
+        createParticles();
+        
+        // Create code layer content
+        function createCodeLayer() {
+            const codeLayer = document.getElementById('codeLayer');
+            const codeSnippets = [
+                'const data = await fetch("/api/metrics");',
+                'function analyzePerformance() { ... }',
+                'export class QuarterTech { ... }',
+                'import { useState, useEffect } from "react";',
+                'const results = data.map(item => item.value);',
+                'if (performance > threshold) { celebrate(); }',
+                'async function loadDashboard() { ... }',
+                'const metrics = calculateQuarterResults();'
+            ];
+            
+            for (let i = 0; i < 8; i++) {
+                const codeLine = document.createElement('div');
+                codeLine.className = 'code-line';
+                codeLine.textContent = codeSnippets[i % codeSnippets.length];
+                codeLine.style.top = Math.random() * 100 + '%';
+                codeLine.style.left = -100 + 'px';
+                codeLine.style.animationDelay = Math.random() * 20 + 's';
+                codeLayer.appendChild(codeLine);
+            }
+        }
+        
+        createCodeLayer();
+        
+        // Parallax Effect on Scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const dataLayer = document.getElementById('dataLayer');
+            const codeLayer = document.getElementById('codeLayer');
+            const grid = document.querySelector('.grid-overlay');
+            
+            // Different speeds for parallax layers
+            dataLayer.style.transform = `translateY(${scrolled * 0.5}px)`;
+            codeLayer.style.transform = `translateY(${scrolled * 0.3}px)`;
+            grid.style.transform = `translateY(${scrolled * 0.1}px)`;
+        });
+        
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.hero, .event-card, .objectives-grid, .logos-container');
+            animatedElements.forEach(el => observer.observe(el));
+        });
+        
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursorDot');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Immediate update for dot
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
+        });
+        
+        // Smooth cursor animation
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        
+        // Cursor hover effects
+        const hoverElements = document.querySelectorAll('button, a, .countdown-item, .objective-item, .logo-slot');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+        });
+        
+        // Hide cursor when leaving window
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+            cursorDot.style.opacity = '0';
+        });
+        
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = '1';
+            cursorDot.style.opacity = '1';
+        });
     </script>
 </body>
 </html>
