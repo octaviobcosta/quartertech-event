@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuarterTech - Save the Date</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            scroll-behavior: smooth;
+            cursor: none;
+        }
+        
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #daa520;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-dot {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #daa520;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+        
+        .cursor.hovering {
+            transform: translate(-50%, -50%) scale(1.5);
+            background: rgba(218, 165, 32, 0.1);
+        }
+        
+        /* Hover Effects */
+        a, button, .countdown-item, .objective-item, .logo-slot {
+            cursor: none;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(218, 165, 32, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Background grafite escuro com tech */
+        .tech-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: -5;
+            transform: translateZ(0);
+        }
+        
+        /* Animated Mesh Gradient */
+        .mesh-gradient {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            z-index: -4;
+            opacity: 0.4;
+            filter: blur(150px);
+            animation: mesh-rotate 30s ease-in-out infinite;
+        }
+        
+        .mesh-gradient::before {
+            content: '';
+            position: absolute;
+            top: 30%;
+            left: 30%;
+            width: 40%;
+            height: 40%;
+            background: radial-gradient(circle, #daa520 0%, transparent 70%);
+            animation: mesh-move-1 20s ease-in-out infinite;
+        }
+        
+        .mesh-gradient::after {
+            content: '';
+            position: absolute;
+            bottom: 30%;
+            right: 30%;
+            width: 35%;
+            height: 35%;
+            background: radial-gradient(circle, #1a1a1a 0%, transparent 70%);
+            animation: mesh-move-2 25s ease-in-out infinite;
+        }
+        
+        @keyframes mesh-rotate {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+        
+        @keyframes mesh-move-1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.2); }
+            66% { transform: translate(-50px, 50px) scale(0.8); }
+        }
+        
+        @keyframes mesh-move-2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-50px, 50px) scale(0.8); }
+            66% { transform: translate(50px, -50px) scale(1.2); }
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(218, 165, 32, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(218, 165, 32, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -3;
+            animation: grid-move 20s linear infinite;
+            will-change: transform;
+        }
+        
+        /* Parallax Layers */
+        .parallax-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            pointer-events: none;
+            will-change: transform;
+        }
+        
+        .parallax-layer.data-layer {
+            z-index: -2;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(218, 165, 32, 0.05) 0%, transparent 50%);
+        }
+        
+        .parallax-layer.code-layer {
+            z-index: -1;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: rgba(218, 165, 32, 0.1);
+            overflow: hidden;
+        }
+        
+        .code-line {
+            position: absolute;
+            white-space: nowrap;
+            opacity: 0;
+            animation: code-fade 20s linear infinite;
+        }
+        
+        @keyframes code-fade {
+            0%, 100% { opacity: 0; transform: translateX(-100px); }
+            50% { opacity: 0.3; transform: translateX(0); }
+        }
+
+        @keyframes grid-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        /* Particles Container */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #daa520;
+            border-radius: 50%;
+            opacity: 0;
+            animation: float-particle 15s linear infinite;
+            box-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
+        }
+        
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Header Fixed com Countdown */
+        .header-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Countdown Container - Full Width com Morphing */
+        .countdown-container {
+            width: 100%;
+            margin: 0;
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, 
+                rgba(218, 165, 32, 0.03) 0%, 
+                rgba(255, 255, 255, 0.01) 50%, 
+                rgba(218, 165, 32, 0.03) 100%);
+            border-radius: 0;
+            border-bottom: 1px solid rgba(218, 165, 32, 0.15);
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Header Scrolled State */
+        .header-fixed.scrolled .countdown-container {
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, 
+                rgba(10, 10, 10, 0.95) 0%, 
+                rgba(20, 20, 20, 0.9) 50%, 
+                rgba(10, 10, 10, 0.95) 100%);
+            border-bottom: 1px solid rgba(218, 165, 32, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .countdown-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #daa520, transparent, #daa520);
+            border-radius: 30px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .countdown-container:hover::before {
+            opacity: 0.3;
+        }
+
+        .countdown-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            color: #daa520;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-align: center;
+            font-weight: 300;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .header-fixed.scrolled .countdown-title {
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 2.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .header-fixed.scrolled .countdown {
+            gap: 1.5rem;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(218, 165, 32, 0.2);
+            border-radius: 20px;
+            padding: 1.2rem 1.8rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 100px;
+        }
+        
+        .header-fixed.scrolled .countdown-item {
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            min-width: 80px;
+        }
+        
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            border-color: #daa520;
+            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.2);
+        }
+        
+        .countdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(218, 165, 32, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .countdown-item:hover::before {
+            opacity: 1;
+        }
+
+        .countdown-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #daa520;
+            display: block;
+            line-height: 1;
+            position: relative;
+            z-index: 1;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .header-fixed.scrolled .countdown-value {
+            font-size: 1.8rem;
+        }
+        
+        .countdown-item:hover .countdown-value {
+            transform: scale(1.1);
+        }
+
+        .countdown-label {
+            font-size: 0.8rem;
+            color: #a0a0a0;
+            text-transform: uppercase;
+            margin-top: 0.6rem;
+            letter-spacing: 2px;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .header-fixed.scrolled .countdown-label {
+            font-size: 0.7rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 150px;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 1;
+            transition: margin-top 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .header-fixed.scrolled ~ .main-content {
+            margin-top: 100px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Logo QuarterTech - Menos brilho */
+        .hero {
+            text-align: center;
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hero.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #daa520, #ffd700, #daa520);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -3px;
+            position: relative;
+            display: inline-block;
+            animation: subtle-shimmer 6s ease-in-out infinite;
+            opacity: 0;
+            animation: none;
+        }
+        
+        .hero.visible .logo-text {
+            opacity: 1;
+            animation: logo-reveal 1.5s ease-out forwards, subtle-shimmer 6s ease-in-out infinite 1.5s;
+        }
+        
+        @keyframes logo-reveal {
+            0% {
+                transform: scale(0.8) rotateX(90deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1) rotateX(0deg);
+            }
+            100% {
+                transform: scale(1) rotateX(0deg);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes subtle-shimmer {
+            0%, 100% { 
+                background-position: 0% 50%;
+                opacity: 0.9;
+            }
+            50% { 
+                background-position: 100% 50%;
+                opacity: 1;
+            }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #daa520;
+            margin-top: 1rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+
+        /* Event Info Card */
+        .event-card {
+            background: linear-gradient(135deg, rgba(15, 15, 15, 0.6), rgba(25, 25, 25, 0.4));
+            border: 1px solid rgba(218, 165, 32, 0.1);
+            border-radius: 30px;
+            padding: 60px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(50px) rotateX(10deg);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center bottom;
+        }
+        
+        .event-card.visible {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .event-item {
+            text-align: center;
+            padding: 25px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .event-item:hover {
+            background: rgba(218, 165, 32, 0.03);
+            border-color: rgba(218, 165, 32, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .event-label {
+            font-size: 0.8rem;
+            color: #daa520;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .event-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .event-weekday {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+
+        .event-location {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 35px;
+            background: rgba(218, 165, 32, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(218, 165, 32, 0.1);
+        }
+
+        .location-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: #daa520;
+        }
+
+        /* Objectives */
+        .objectives {
+            margin-top: 40px;
+        }
+
+        .objectives-title {
+            text-align: center;
+            font-size: 1rem;
+            color: #a0a0a0;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .objective-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .objectives-grid.visible .objective-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .objectives-grid.visible .objective-item:nth-child(1) { transition-delay: 0.1s; }
+        .objectives-grid.visible .objective-item:nth-child(2) { transition-delay: 0.2s; }
+        .objectives-grid.visible .objective-item:nth-child(3) { transition-delay: 0.3s; }
+        .objectives-grid.visible .objective-item:nth-child(4) { transition-delay: 0.4s; }
+
+        .objective-item:hover {
+            background: rgba(218, 165, 32, 0.03);
+            border-color: rgba(218, 165, 32, 0.1);
+            transform: translateX(4px);
+        }
+
+        .objective-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(218, 165, 32, 0.1);
+            border: 1px solid rgba(218, 165, 32, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .objective-text {
+            font-size: 0.9rem;
+            color: #ffffff;
+            font-weight: 400;
+        }
+
+        /* Logos Container - Exatamente como no arquivo original */
+        .logos-container {
+            background: linear-gradient(135deg, rgba(15, 15, 15, 0.8), rgba(25, 25, 25, 0.6));
+            border-radius: 30px;
+            padding: 4rem 3rem;
+            margin-top: 4rem;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(218, 165, 32, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px) scale(0.95);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .logos-container.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .logos-title {
+            font-size: 1.1rem;
+            color: #daa520;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 3rem;
+            text-align: center;
+            font-weight: 300;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .logos-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #daa520, transparent);
+        }
+
+        .logos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            align-items: center;
+            justify-items: center;
+            row-gap: 3.5rem;
+        }
+
+        .logo-slot {
+            width: 220px;
+            height: 110px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #606060;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-slot::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(45deg, transparent, rgba(218, 165, 32, 0.05), transparent);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+        }
+
+        .logo-slot:hover::before {
+            top: -50%;
+            left: -50%;
+            opacity: 1;
+        }
+
+        .logo-slot:hover {
+            background: rgba(218, 165, 32, 0.03);
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.1);
+        }
+        
+        .logo-slot img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: brightness(0.9) contrast(1.1);
+            transition: all 0.4s ease;
+        }
+        
+        .logo-slot:hover img {
+            filter: brightness(1.1) contrast(1.2);
+            transform: scale(1.05);
+        }
+
+        /* Logo da Fábrica de Bares maior */
+        .logo-slot:nth-child(2) img {
+            transform: scale(1.2);
+        }
+
+        .logo-slot:nth-child(2):hover img {
+            transform: scale(1.25);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            margin: 80px 0 60px;
+        }
+
+        .cta-title {
+            font-size: 1.2rem;
+            color: #daa520;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 400;
+        }
+
+        .qr-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 50px;
+            background: transparent;
+            border: 1px solid #daa520;
+            border-radius: 50px;
+            color: #daa520;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Glitch effect on hover */
+        .qr-button::after {
+            content: 'QR CODE';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #00d4ff;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-shadow: 2px 2px 0 #ff0080;
+            animation: glitch 0.3s infinite;
+            animation-play-state: paused;
+        }
+        
+        .qr-button:hover::after {
+            animation-play-state: running;
+            opacity: 0.5;
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(-50%, -50%) skew(0deg); }
+            20% { transform: translate(-48%, -50%) skew(2deg); }
+            40% { transform: translate(-52%, -50%) skew(-2deg); }
+            60% { transform: translate(-50%, -48%) skew(1deg); }
+            80% { transform: translate(-50%, -52%) skew(-1deg); }
+            100% { transform: translate(-50%, -50%) skew(0deg); }
+        }
+
+        .qr-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: #daa520;
+            border-radius: 50%;
+            transition: all 0.5s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .qr-button:hover::before {
+            width: 350px;
+            height: 350px;
+        }
+
+        .qr-button:hover {
+            color: #0a0a0a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.2);
+        }
+
+        .qr-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Data Visualization Animation */
+        .data-visual {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            opacity: 0.3;
+        }
+
+        .data-bar {
+            position: absolute;
+            bottom: 0;
+            width: 15px;
+            background: linear-gradient(180deg, #daa520, #ffd700);
+            animation: data-flow 3s ease-in-out infinite;
+        }
+
+        .data-bar:nth-child(1) { left: 10px; height: 40%; animation-delay: 0s; }
+        .data-bar:nth-child(2) { left: 30px; height: 70%; animation-delay: 0.5s; }
+        .data-bar:nth-child(3) { left: 50px; height: 55%; animation-delay: 1s; }
+        .data-bar:nth-child(4) { left: 70px; height: 85%; animation-delay: 1.5s; }
+
+        @keyframes data-flow {
+            0%, 100% { transform: scaleY(1); opacity: 0.3; }
+            50% { transform: scaleY(1.2); opacity: 0.8; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .countdown-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .countdown {
+                gap: 1.5rem;
+            }
+
+            .countdown-item {
+                min-width: 80px;
+                padding: 1rem 1.5rem;
+            }
+
+            .countdown-value {
+                font-size: 2.5rem;
+            }
+
+            .logo-text {
+                font-size: 3.5rem;
+            }
+
+            .event-card {
+                padding: 40px 20px;
+            }
+
+            .event-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .logos-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .countdown {
+                gap: 1rem;
+            }
+
+            .countdown-item {
+                min-width: 70px;
+                padding: 0.8rem 1.2rem;
+            }
+
+            .countdown-value {
+                font-size: 2rem;
+            }
+
+            .countdown-label {
+                font-size: 0.7rem;
+            }
+
+            .logos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-text {
+                font-size: 2.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+    
+    <!-- Background -->
+    <div class="tech-background"></div>
+    <div class="mesh-gradient"></div>
+    <div class="grid-overlay"></div>
+    
+    <!-- Parallax Layers -->
+    <div class="parallax-layer data-layer" id="dataLayer"></div>
+    <div class="parallax-layer code-layer" id="codeLayer"></div>
+    
+    <!-- Particles -->
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Fixed Header with Countdown -->
+    <header class="header-fixed">
+        <div class="countdown-container">
+            <div class="countdown-title">Faltam apenas</div>
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-value" id="days">00</span>
+                    <span class="countdown-label">Dias</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="hours">00</span>
+                    <span class="countdown-label">Horas</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="minutes">00</span>
+                    <span class="countdown-label">Minutos</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="seconds">00</span>
+                    <span class="countdown-label">Segundos</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1 class="logo-text">QuarterTech</h1>
+                <p class="subtitle">Save the Date</p>
+            </section>
+
+            <!-- Event Information -->
+            <section class="event-card">
+                <div class="event-grid">
+                    <div class="event-item">
+                        <div class="event-label">Data</div>
+                        <div class="event-value">15 de Julho</div>
+                        <div class="event-weekday">Terça-feira</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-label">Horário</div>
+                        <div class="event-value">14:00 - 18:00</div>
+                    </div>
+                    <div class="event-location">
+                        <div class="event-label">Local</div>
+                        <div class="location-value">Bar Brahma</div>
+                    </div>
+                </div>
+
+                <div class="objectives">
+                    <h3 class="objectives-title">Principais objetivos do encontro</h3>
+                    <div class="objectives-grid">
+                        <div class="objective-item">
+                            <div class="objective-icon">📊</div>
+                            <span class="objective-text">Resultados do Quarter</span>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-icon">🎯</div>
+                            <span class="objective-text">Metas e Objetivos</span>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-icon">🚀</div>
+                            <span class="objective-text">Novos Produtos</span>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-icon">💡</div>
+                            <span class="objective-text">Tendências do Mercado</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Companies Section -->
+            <div class="logos-container">
+                <h3 class="logos-title">Empresas Participantes</h3>
+                <div class="logos-grid">
+                    <div class="logo-slot">
+                        <img src="logoB.png" alt="eshows">
+                    </div>
+                    <div class="logo-slot">
+                        <img src="logofbcor.png" alt="Fábrica de Bares">
+                    </div>
+                    <div class="logo-slot">
+                        <img src="estaff_logo_transparent.png" alt="estaff">
+                    </div>
+                    <div class="logo-slot">
+                        <img src="Blue.me.png" alt="Blue.me">
+                    </div>
+                    <div class="logo-slot">
+                        <img src="logofablab.png" alt="FabLab">
+                    </div>
+                    <div class="logo-slot">
+                        <img src="Imagem do WhatsApp de 2025-07-08 à(s) 19.16.37_fd7c4a3f_clipped_rev_1.png" alt="espaces">
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <h3 class="cta-title">Reserve sua Agenda</h3>
+                <button class="qr-button" onclick="alert('QR Code em breve!')">
+                    <span>QR CODE</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                    </svg>
+                </button>
+            </section>
+        </div>
+    </main>
+
+    <!-- Data Visualization Animation -->
+    <div class="data-visual">
+        <div class="data-bar"></div>
+        <div class="data-bar"></div>
+        <div class="data-bar"></div>
+        <div class="data-bar"></div>
+    </div>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const eventDate = new Date('2025-07-15T14:00:00');
+            const now = new Date();
+            const diff = eventDate - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            } else {
+                document.querySelector('.countdown-title').textContent = 'Evento em andamento!';
+            }
+        }
+
+        // Update countdown every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        // Header Morphing on Scroll
+        let lastScroll = 0;
+        const header = document.querySelector('.header-fixed');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Create Floating Particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random position
+                particle.style.left = Math.random() * 100 + '%';
+                
+                // Random animation delay
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                
+                // Random size
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Random horizontal movement
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Initialize particles
+        createParticles();
+        
+        // Create code layer content
+        function createCodeLayer() {
+            const codeLayer = document.getElementById('codeLayer');
+            const codeSnippets = [
+                'const data = await fetch("/api/metrics");',
+                'function analyzePerformance() { ... }',
+                'export class QuarterTech { ... }',
+                'import { useState, useEffect } from "react";',
+                'const results = data.map(item => item.value);',
+                'if (performance > threshold) { celebrate(); }',
+                'async function loadDashboard() { ... }',
+                'const metrics = calculateQuarterResults();'
+            ];
+            
+            for (let i = 0; i < 8; i++) {
+                const codeLine = document.createElement('div');
+                codeLine.className = 'code-line';
+                codeLine.textContent = codeSnippets[i % codeSnippets.length];
+                codeLine.style.top = Math.random() * 100 + '%';
+                codeLine.style.left = -100 + 'px';
+                codeLine.style.animationDelay = Math.random() * 20 + 's';
+                codeLayer.appendChild(codeLine);
+            }
+        }
+        
+        createCodeLayer();
+        
+        // Parallax Effect on Scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const dataLayer = document.getElementById('dataLayer');
+            const codeLayer = document.getElementById('codeLayer');
+            const grid = document.querySelector('.grid-overlay');
+            
+            // Different speeds for parallax layers
+            dataLayer.style.transform = `translateY(${scrolled * 0.5}px)`;
+            codeLayer.style.transform = `translateY(${scrolled * 0.3}px)`;
+            grid.style.transform = `translateY(${scrolled * 0.1}px)`;
+        });
+        
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.hero, .event-card, .objectives-grid, .logos-container');
+            animatedElements.forEach(el => observer.observe(el));
+        });
+        
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursorDot');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Immediate update for dot
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
+        });
+        
+        // Smooth cursor animation
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        
+        // Cursor hover effects
+        const hoverElements = document.querySelectorAll('button, a, .countdown-item, .objective-item, .logo-slot');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+        });
+        
+        // Hide cursor when leaving window
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+            cursorDot.style.opacity = '0';
+        });
+        
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = '1';
+            cursorDot.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

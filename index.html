@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -23,6 +24,7 @@
             position: relative;
             scroll-behavior: smooth;
             cursor: none;
+            line-height: 1.8;
         }
         
         /* Custom Cursor */
@@ -30,7 +32,7 @@
             position: fixed;
             width: 20px;
             height: 20px;
-            border: 2px solid #daa520;
+            border: 2px solid #B8860B;
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
@@ -43,7 +45,7 @@
             position: fixed;
             width: 4px;
             height: 4px;
-            background: #daa520;
+            background: #B8860B;
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
@@ -52,7 +54,7 @@
         
         .cursor.hovering {
             transform: translate(-50%, -50%) scale(1.5);
-            background: rgba(218, 165, 32, 0.1);
+            background: rgba(184, 134, 11, 0.1);
         }
         
         /* Hover Effects */
@@ -67,7 +69,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(218, 165, 32, 0.02) 0%, transparent 50%);
+            background: radial-gradient(circle at 50% 50%, rgba(184, 134, 11, 0.02) 0%, transparent 50%);
             pointer-events: none;
             z-index: 1;
         }
@@ -104,7 +106,7 @@
             left: 30%;
             width: 40%;
             height: 40%;
-            background: radial-gradient(circle, #daa520 0%, transparent 70%);
+            background: radial-gradient(circle, #B8860B 0%, transparent 70%);
             animation: mesh-move-1 20s ease-in-out infinite;
         }
         
@@ -143,11 +145,11 @@
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(218, 165, 32, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(218, 165, 32, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(184, 134, 11, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(184, 134, 11, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             z-index: -3;
-            animation: grid-move 20s linear infinite;
+            animation: grid-move 40s linear infinite;
             will-change: transform;
         }
         
@@ -166,16 +168,16 @@
             z-index: -2;
             opacity: 0.05;
             background-image: 
-                radial-gradient(circle at 20% 80%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(218, 165, 32, 0.05) 0%, transparent 50%);
+                radial-gradient(circle at 20% 80%, rgba(184, 134, 11, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(184, 134, 11, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(184, 134, 11, 0.05) 0%, transparent 50%);
         }
         
         .parallax-layer.code-layer {
             z-index: -1;
             font-family: 'Courier New', monospace;
             font-size: 14px;
-            color: rgba(218, 165, 32, 0.1);
+            color: rgba(184, 134, 11, 0.1);
             overflow: hidden;
         }
         
@@ -183,12 +185,12 @@
             position: absolute;
             white-space: nowrap;
             opacity: 0;
-            animation: code-fade 20s linear infinite;
+            animation: code-fade 30s linear infinite;
         }
         
         @keyframes code-fade {
             0%, 100% { opacity: 0; transform: translateX(-100px); }
-            50% { opacity: 0.3; transform: translateX(0); }
+            50% { opacity: 0.15; transform: translateX(0); }
         }
 
         @keyframes grid-move {
@@ -209,28 +211,112 @@
         
         .particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #daa520;
+            width: 3px;
+            height: 3px;
+            background: #B8860B;
             border-radius: 50%;
             opacity: 0;
-            animation: float-particle 15s linear infinite;
-            box-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
+            animation: float-particle 25s linear infinite;
+            box-shadow: 0 0 6px rgba(184, 134, 11, 0.3);
+        }
+        
+        .particle.small {
+            width: 2px;
+            height: 2px;
+            animation-duration: 30s;
+        }
+        
+        .particle.large {
+            width: 4px;
+            height: 4px;
+            animation-duration: 20s;
+            box-shadow: 0 0 10px rgba(184, 134, 11, 0.4);
         }
         
         @keyframes float-particle {
             0% {
-                transform: translateY(100vh) scale(0);
+                transform: translateY(100vh) translateX(0) scale(0);
                 opacity: 0;
             }
             10% {
-                opacity: 0.8;
+                opacity: 0.4;
+            }
+            50% {
+                transform: translateY(50vh) translateX(30px) scale(1);
             }
             90% {
-                opacity: 0.8;
+                opacity: 0.4;
             }
             100% {
-                transform: translateY(-100vh) scale(1);
+                transform: translateY(-100vh) translateX(-30px) scale(1);
+                opacity: 0;
+            }
+        }
+        
+        /* Tech Connection Lines */
+        .tech-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.1;
+        }
+        
+        .tech-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, #B8860B, transparent);
+            height: 1px;
+            animation: line-pulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes line-pulse {
+            0%, 100% {
+                opacity: 0;
+                transform: scaleX(0);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scaleX(1);
+            }
+        }
+        
+        /* Digital Rain Effect */
+        .digital-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .rain-drop {
+            position: absolute;
+            color: #B8860B;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            opacity: 0;
+            animation: rain-fall 15s linear infinite;
+        }
+        
+        @keyframes rain-fall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(100vh);
                 opacity: 0;
             }
         }
@@ -241,22 +327,27 @@
             top: 0;
             left: 0;
             right: 0;
+            width: 100%;
             z-index: 1000;
             padding: 0;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(184, 134, 11, 0.2);
         }
 
         /* Countdown Container - Full Width com Morphing */
         .countdown-container {
             width: 100%;
             margin: 0;
-            padding: 1.5rem 2rem;
+            padding: 1rem 2rem;
             background: linear-gradient(135deg, 
-                rgba(218, 165, 32, 0.03) 0%, 
+                rgba(184, 134, 11, 0.03) 0%, 
                 rgba(255, 255, 255, 0.01) 50%, 
-                rgba(218, 165, 32, 0.03) 100%);
+                rgba(184, 134, 11, 0.03) 100%);
             border-radius: 0;
-            border-bottom: 1px solid rgba(218, 165, 32, 0.15);
+            border-bottom: 1px solid rgba(184, 134, 11, 0.15);
             backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
@@ -264,17 +355,22 @@
                 0 20px 50px rgba(0, 0, 0, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.05);
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
         }
         
         /* Header Scrolled State */
         .header-fixed.scrolled .countdown-container {
-            padding: 0.8rem 2rem;
+            padding: 0.5rem 2rem;
             background: linear-gradient(135deg, 
                 rgba(10, 10, 10, 0.95) 0%, 
                 rgba(20, 20, 20, 0.9) 50%, 
                 rgba(10, 10, 10, 0.95) 100%);
-            border-bottom: 1px solid rgba(218, 165, 32, 0.3);
+            border-bottom: 1px solid rgba(184, 134, 11, 0.3);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            gap: 2rem;
         }
         
         .countdown-container::before {
@@ -284,7 +380,7 @@
             left: -2px;
             right: -2px;
             bottom: -2px;
-            background: linear-gradient(45deg, #daa520, transparent, #daa520);
+            background: linear-gradient(45deg, #B8860B, transparent, #B8860B);
             border-radius: 30px;
             opacity: 0;
             z-index: -1;
@@ -297,56 +393,56 @@
 
         .countdown-title {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.2rem;
-            color: #daa520;
-            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            color: #B8860B;
+            margin: 0;
             text-transform: uppercase;
             letter-spacing: 4px;
-            text-align: center;
-            font-weight: 300;
+            font-weight: 400;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
         }
         
         .header-fixed.scrolled .countdown-title {
-            font-size: 0.9rem;
-            margin-bottom: 0.8rem;
+            font-size: 0.8rem;
             letter-spacing: 2px;
         }
 
         .countdown {
             display: flex;
-            gap: 2.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .header-fixed.scrolled .countdown {
-            gap: 1.5rem;
+            gap: 1.2rem;
         }
 
         .countdown-item {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(218, 165, 32, 0.2);
-            border-radius: 20px;
-            padding: 1.2rem 1.8rem;
+            border: 1px solid rgba(184, 134, 11, 0.2);
+            border-radius: 16px;
+            padding: 0.8rem 1.5rem;
             text-align: center;
             position: relative;
             overflow: hidden;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            min-width: 100px;
+            width: 120px;
+            flex: 0 0 120px;
         }
         
         .header-fixed.scrolled .countdown-item {
-            padding: 0.6rem 1.2rem;
-            border-radius: 12px;
-            min-width: 80px;
+            padding: 0.4rem 1rem;
+            border-radius: 10px;
+            width: 90px;
+            flex: 0 0 90px;
         }
         
         .countdown-item:hover {
-            transform: translateY(-5px);
-            border-color: #daa520;
-            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.2);
+            transform: translateY(-2px);
+            border-color: rgba(184, 134, 11, 0.3);
+            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.1);
         }
         
         .countdown-item::before {
@@ -356,7 +452,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(218, 165, 32, 0.1) 0%, transparent 100%);
+            background: linear-gradient(180deg, rgba(184, 134, 11, 0.1) 0%, transparent 100%);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -367,9 +463,9 @@
 
         .countdown-value {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
-            color: #daa520;
+            color: #B8860B;
             display: block;
             line-height: 1;
             position: relative;
@@ -378,19 +474,19 @@
         }
         
         .header-fixed.scrolled .countdown-value {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
         }
         
         .countdown-item:hover .countdown-value {
-            transform: scale(1.1);
+            transform: scale(1.02);
         }
 
         .countdown-label {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: #a0a0a0;
             text-transform: uppercase;
-            margin-top: 0.6rem;
-            letter-spacing: 2px;
+            margin-top: 0.4rem;
+            letter-spacing: 1px;
             font-weight: 300;
             position: relative;
             z-index: 1;
@@ -398,21 +494,21 @@
         }
         
         .header-fixed.scrolled .countdown-label {
-            font-size: 0.7rem;
-            margin-top: 0.3rem;
+            font-size: 0.6rem;
+            margin-top: 0.2rem;
         }
 
         /* Main Content */
         .main-content {
-            margin-top: 150px;
-            padding: 60px 20px;
+            margin-top: 120px;
+            padding: 100px 20px;
             position: relative;
             z-index: 1;
             transition: margin-top 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .header-fixed.scrolled ~ .main-content {
-            margin-top: 100px;
+            margin-top: 80px;
         }
 
         .container {
@@ -423,7 +519,7 @@
         /* Logo QuarterTech - Menos brilho */
         .hero {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 120px;
             opacity: 0;
             transform: translateY(30px);
             transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
@@ -436,18 +532,19 @@
 
         .logo-text {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #daa520, #ffd700, #daa520);
+            font-size: 6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #B8860B, #D4AF37, #8B6914);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -3px;
+            letter-spacing: -2px;
             position: relative;
             display: inline-block;
             animation: subtle-shimmer 6s ease-in-out infinite;
             opacity: 0;
             animation: none;
+            line-height: 0.9;
         }
         
         .hero.visible .logo-text {
@@ -481,22 +578,22 @@
         }
 
         .subtitle {
-            font-size: 1.2rem;
-            color: #daa520;
-            margin-top: 1rem;
-            letter-spacing: 6px;
+            font-size: 1.1rem;
+            color: #B8860B;
+            margin-top: 1.5rem;
+            letter-spacing: 8px;
             text-transform: uppercase;
-            font-weight: 300;
-            opacity: 0.8;
+            font-weight: 400;
+            opacity: 0.7;
         }
 
         /* Event Info Card */
         .event-card {
             background: linear-gradient(135deg, rgba(15, 15, 15, 0.6), rgba(25, 25, 25, 0.4));
-            border: 1px solid rgba(218, 165, 32, 0.1);
+            border: 1px solid rgba(184, 134, 11, 0.1);
             border-radius: 30px;
-            padding: 60px;
-            margin-bottom: 60px;
+            padding: 80px;
+            margin-bottom: 100px;
             backdrop-filter: blur(20px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             opacity: 0;
@@ -509,36 +606,60 @@
             opacity: 1;
             transform: translateY(0) rotateX(0);
         }
+        
 
         .event-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-            margin-bottom: 40px;
+            gap: 50px;
+            margin-bottom: 60px;
         }
 
         .event-item {
-            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 20px;
             padding: 25px;
             border-radius: 16px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
+        }
+        
+        .event-info-content {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .event-icon {
+            width: 48px;
+            height: 48px;
+            color: #B8860B;
+            flex-shrink: 0;
+            opacity: 0.8;
+        }
+        
+        .event-icon-img {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            opacity: 0.9;
+            filter: brightness(1.1);
         }
 
         .event-item:hover {
-            background: rgba(218, 165, 32, 0.03);
-            border-color: rgba(218, 165, 32, 0.15);
+            background: rgba(184, 134, 11, 0.03);
+            border-color: rgba(184, 134, 11, 0.15);
             transform: translateY(-2px);
         }
 
         .event-label {
             font-size: 0.8rem;
-            color: #daa520;
+            color: #B8860B;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             margin-bottom: 12px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .event-value {
@@ -559,36 +680,73 @@
         .event-location {
             grid-column: 1 / -1;
             text-align: center;
-            padding: 35px;
-            background: rgba(218, 165, 32, 0.03);
+            padding: 25px 35px;
+            background: rgba(184, 134, 11, 0.03);
             border-radius: 16px;
-            border: 1px solid rgba(218, 165, 32, 0.1);
+            border: 1px solid rgba(184, 134, 11, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .brahma-logo-main {
+            height: 160px;
+            width: auto;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4))
+                    drop-shadow(0 0 30px rgba(184, 134, 11, 0.5));
+            transition: all 0.3s ease;
+            animation: logoMainGlow 3s ease-in-out infinite;
+            margin: 5px 0;
+        }
+        
+        .brahma-logo-main:hover {
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5))
+                    drop-shadow(0 0 40px rgba(184, 134, 11, 0.7));
+            transform: scale(1.05);
+        }
+        
+        @keyframes logoMainGlow {
+            0%, 100% {
+                filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4))
+                        drop-shadow(0 0 30px rgba(184, 134, 11, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5))
+                        drop-shadow(0 0 40px rgba(184, 134, 11, 0.7));
+            }
+        }
+        
+        .location-address {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+            margin-top: 0;
         }
 
         .location-value {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 2.8rem;
             font-weight: 600;
-            color: #daa520;
+            color: #B8860B;
         }
 
         /* Objectives */
         .objectives {
-            margin-top: 40px;
+            margin-top: 60px;
         }
 
         .objectives-title {
             text-align: center;
             font-size: 1rem;
             color: #a0a0a0;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             font-weight: 400;
         }
 
         .objectives-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            gap: 30px;
         }
 
         .objective-item {
@@ -599,7 +757,7 @@
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
             opacity: 0;
             transform: translateX(-30px);
         }
@@ -615,16 +773,16 @@
         .objectives-grid.visible .objective-item:nth-child(4) { transition-delay: 0.4s; }
 
         .objective-item:hover {
-            background: rgba(218, 165, 32, 0.03);
-            border-color: rgba(218, 165, 32, 0.1);
-            transform: translateX(4px);
+            background: rgba(184, 134, 11, 0.02);
+            border-color: rgba(184, 134, 11, 0.08);
+            transform: translateX(2px);
         }
 
         .objective-icon {
             width: 36px;
             height: 36px;
-            background: rgba(218, 165, 32, 0.1);
-            border: 1px solid rgba(218, 165, 32, 0.2);
+            background: rgba(184, 134, 11, 0.1);
+            border: 1px solid rgba(184, 134, 11, 0.2);
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -646,7 +804,7 @@
             padding: 4rem 3rem;
             margin-top: 4rem;
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(218, 165, 32, 0.1);
+            border: 1px solid rgba(184, 134, 11, 0.1);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
@@ -662,7 +820,7 @@
 
         .logos-title {
             font-size: 1.1rem;
-            color: #daa520;
+            color: #B8860B;
             text-transform: uppercase;
             letter-spacing: 3px;
             margin-bottom: 3rem;
@@ -680,7 +838,7 @@
             transform: translateX(-50%);
             width: 100px;
             height: 1px;
-            background: linear-gradient(90deg, transparent, #daa520, transparent);
+            background: linear-gradient(90deg, transparent, #B8860B, transparent);
         }
 
         .logos-grid {
@@ -717,7 +875,7 @@
             left: -100%;
             width: 300%;
             height: 300%;
-            background: linear-gradient(45deg, transparent, rgba(218, 165, 32, 0.05), transparent);
+            background: linear-gradient(45deg, transparent, rgba(184, 134, 11, 0.05), transparent);
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
         }
@@ -729,10 +887,10 @@
         }
 
         .logo-slot:hover {
-            background: rgba(218, 165, 32, 0.03);
-            border: 1px solid rgba(218, 165, 32, 0.3);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.1);
+            background: rgba(184, 134, 11, 0.02);
+            border: 1px solid rgba(184, 134, 11, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.05);
         }
         
         .logo-slot img {
@@ -744,8 +902,8 @@
         }
         
         .logo-slot:hover img {
-            filter: brightness(1.1) contrast(1.2);
-            transform: scale(1.05);
+            filter: brightness(1.05) contrast(1.1);
+            transform: scale(1.02);
         }
 
         /* Logo da Fábrica de Bares maior */
@@ -765,7 +923,7 @@
 
         .cta-title {
             font-size: 1.2rem;
-            color: #daa520;
+            color: #B8860B;
             margin-bottom: 30px;
             text-transform: uppercase;
             letter-spacing: 3px;
@@ -778,69 +936,40 @@
             gap: 12px;
             padding: 18px 50px;
             background: transparent;
-            border: 1px solid #daa520;
+            border: 1px solid #B8860B;
             border-radius: 50px;
-            color: #daa520;
+            color: #B8860B;
             font-size: 0.95rem;
             font-weight: 500;
             letter-spacing: 1px;
             cursor: none;
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
             position: relative;
             overflow: hidden;
         }
         
-        /* Glitch effect on hover */
-        .qr-button::after {
-            content: 'QR CODE';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #00d4ff;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            text-shadow: 2px 2px 0 #ff0080;
-            animation: glitch 0.3s infinite;
-            animation-play-state: paused;
-        }
-        
-        .qr-button:hover::after {
-            animation-play-state: running;
-            opacity: 0.5;
-        }
-        
-        @keyframes glitch {
-            0% { transform: translate(-50%, -50%) skew(0deg); }
-            20% { transform: translate(-48%, -50%) skew(2deg); }
-            40% { transform: translate(-52%, -50%) skew(-2deg); }
-            60% { transform: translate(-50%, -48%) skew(1deg); }
-            80% { transform: translate(-50%, -52%) skew(-1deg); }
-            100% { transform: translate(-50%, -50%) skew(0deg); }
-        }
+        /* Subtle hover effect */
 
         .qr-button::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: #daa520;
-            border-radius: 50%;
-            transition: all 0.5s ease;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(184, 134, 11, 0.05);
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
 
         .qr-button:hover::before {
-            width: 350px;
-            height: 350px;
+            opacity: 1;
         }
 
         .qr-button:hover {
-            color: #0a0a0a;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.2);
+            border-color: rgba(184, 134, 11, 0.6);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.1);
         }
 
         .qr-button span {
@@ -855,49 +984,539 @@
             right: 20px;
             width: 100px;
             height: 100px;
-            opacity: 0.3;
+            opacity: 0.2;
         }
 
         .data-bar {
             position: absolute;
             bottom: 0;
             width: 15px;
-            background: linear-gradient(180deg, #daa520, #ffd700);
-            animation: data-flow 3s ease-in-out infinite;
+            background: linear-gradient(180deg, #B8860B, #8B6914);
+            animation: data-flow 6s ease-in-out infinite;
         }
 
         .data-bar:nth-child(1) { left: 10px; height: 40%; animation-delay: 0s; }
-        .data-bar:nth-child(2) { left: 30px; height: 70%; animation-delay: 0.5s; }
-        .data-bar:nth-child(3) { left: 50px; height: 55%; animation-delay: 1s; }
-        .data-bar:nth-child(4) { left: 70px; height: 85%; animation-delay: 1.5s; }
+        .data-bar:nth-child(2) { left: 30px; height: 70%; animation-delay: 1s; }
+        .data-bar:nth-child(3) { left: 50px; height: 55%; animation-delay: 2s; }
+        .data-bar:nth-child(4) { left: 70px; height: 85%; animation-delay: 3s; }
 
         @keyframes data-flow {
-            0%, 100% { transform: scaleY(1); opacity: 0.3; }
-            50% { transform: scaleY(1.2); opacity: 0.8; }
+            0%, 100% { transform: scaleY(1); opacity: 0.2; }
+            50% { transform: scaleY(1.1); opacity: 0.4; }
+        }
+        
+        /* Holographic Effect on Logo */
+        .logo-text::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #B8860B, #D4AF37, #8B6914);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.5;
+            z-index: -1;
+            animation: hologram 3s ease-in-out infinite;
+        }
+        
+        @keyframes hologram {
+            0%, 100% {
+                transform: translate(0, 0);
+                opacity: 0.5;
+            }
+            25% {
+                transform: translate(2px, -2px);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translate(-2px, 2px);
+                opacity: 0.7;
+            }
+            75% {
+                transform: translate(2px, 2px);
+                opacity: 0.4;
+            }
+        }
+        
+        /* Tech Scanner Effect */
+        .scanner-line {
+            position: fixed;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #B8860B 40%, #D4AF37 50%, #B8860B 60%, transparent);
+            top: 0;
+            left: 0;
+            z-index: 3;
+            opacity: 0.8;
+            animation: scan 10s linear infinite;
+            box-shadow: 0 0 20px rgba(184, 134, 11, 0.6);
+        }
+        
+        .scanner-line::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(180deg, rgba(184, 134, 11, 0.1), transparent);
+            top: -25px;
+            left: 0;
+            pointer-events: none;
+        }
+        
+        @keyframes scan {
+            0% {
+                top: -50px;
+            }
+            100% {
+                top: calc(100vh + 50px);
+            }
+        }
+        
+        /* Scan Glow Effect */
+        .scan-glow {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(184, 134, 11, 0.05) 10%, transparent 20%);
+            animation: scan-glow 10s linear infinite;
+        }
+        
+        @keyframes scan-glow {
+            0%, 100% {
+                opacity: 0;
+            }
+            5%, 15% {
+                opacity: 1;
+            }
+        }
+        
+        /* Glowing Orbs */
+        .glow-orb {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(184, 134, 11, 0.2) 0%, transparent 70%);
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: 0;
+            animation: orb-float 20s ease-in-out infinite;
+        }
+        
+        @keyframes orb-float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(100px, -100px) scale(1.2);
+            }
+            66% {
+                transform: translate(-100px, 100px) scale(0.8);
+            }
+        }
+
+        /* Floating Calendar Button */
+        .floating-calendar-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #B8860B 0%, #8B6914 100%);
+            color: white;
+            border: none;
+            border-radius: 60px;
+            padding: 18px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 8px 32px rgba(184, 134, 11, 0.3),
+                        0 4px 16px rgba(0, 0, 0, 0.5);
+            cursor: none;
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(0);
+            opacity: 1;
+            animation: floatingPulse 3s ease-in-out infinite;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 30px;
+        }
+        
+        .footer p {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+        
+        .floating-calendar-btn.hidden {
+            transform: translateY(100px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .floating-calendar-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(184, 134, 11, 0.4),
+                        0 6px 20px rgba(0, 0, 0, 0.6);
+            background: linear-gradient(135deg, #D4A017 0%, #B8860B 100%);
+        }
+        
+        .floating-calendar-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        @keyframes floatingPulse {
+            0%, 100% {
+                box-shadow: 0 8px 32px rgba(184, 134, 11, 0.3),
+                            0 4px 16px rgba(0, 0, 0, 0.5);
+            }
+            50% {
+                box-shadow: 0 8px 40px rgba(184, 134, 11, 0.5),
+                            0 4px 20px rgba(0, 0, 0, 0.6);
+            }
+        }
+        
+        .floating-calendar-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* QR Code Modal */
+        .qr-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .qr-modal.active {
+            display: flex;
+        }
+        
+        .qr-modal-content {
+            background: linear-gradient(135deg, rgba(15, 15, 15, 0.95), rgba(25, 25, 25, 0.9));
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            border-radius: 30px;
+            padding: 3rem 3rem 2rem;
+            text-align: center;
+            position: relative;
+            max-width: 400px;
+            width: 90%;
+            margin: 0 auto;
+            animation: modalSlideIn 0.5s ease-out;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .qr-modal-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            color: #B8860B;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        /* QR code styles removed - using direct calendar button instead */
+        
+        /* Desktop/Mobile text visibility */
+        .desktop-only {
+            display: inline;
+        }
+        
+        .mobile-only {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .desktop-only {
+                display: none;
+            }
+            
+            .mobile-only {
+                display: inline;
+            }
+        }
+        
+        .qr-modal-text {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            border-radius: 50%;
+            color: #B8860B;
+            font-size: 1.2rem;
+            cursor: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .close-modal:hover {
+            background: rgba(184, 134, 11, 0.1);
+            border-color: #B8860B;
+            transform: rotate(90deg);
+        }
+        
+        /* Calendar Direct Button for Mobile */
+        .calendar-direct-btn {
+            background: linear-gradient(135deg, #B8860B 0%, #8B6914 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px auto 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.3);
+        }
+        
+        .calendar-direct-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(184, 134, 11, 0.4);
+            background: linear-gradient(135deg, #D4A017 0%, #B8860B 100%);
+        }
+        
+        .calendar-direct-btn svg {
+            width: 20px;
+            height: 20px;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
+            /* Padrões globais mobile 2025 */
+            .container {
+                padding: 0 16px;
+            }
+            
+            .hero {
+                margin-bottom: 32px;
+            }
+            
+            .event-card {
+                margin-bottom: 32px;
+                padding: 24px 16px;
+            }
+            
+            .objectives {
+                margin-bottom: 32px;
+            }
+            
+            .cta-section {
+                margin: 48px 0 32px;
+            }
+            .header-fixed {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                padding: 0 !important;
+                min-height: auto;
+                width: 100% !important;
+                box-sizing: border-box;
+            }
+            
+            /* Mobile-first compact design */
             .countdown-container {
-                padding: 2rem 1.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+                width: 100%;
+                padding: 1rem 16px;
+                margin: 0;
+                background: transparent !important;
+                border: none !important;
+                border-radius: 0 !important;
+            }
+            
+            .countdown-container p {
+                font-size: 0.75rem;
+                margin: 0;
+                letter-spacing: 2px;
+                opacity: 0.8;
+                text-align: center;
+            }
+            
+            .countdown-title {
+                margin: 0 16px;
             }
 
             .countdown {
-                gap: 1.5rem;
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+                width: 100%;
+                flex-wrap: nowrap;
             }
 
             .countdown-item {
-                min-width: 80px;
-                padding: 1rem 1.5rem;
+                flex: 0 0 85px;
+                width: 85px;
+                padding: 0.8rem 0.4rem;
+                margin: 0;
+                background: rgba(184, 134, 11, 0.05);
+                border: 1px solid rgba(184, 134, 11, 0.15);
+                border-radius: 12px;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            /* Esconder apenas segundos no mobile */
+            .countdown-item:nth-child(4) {
+                display: none;
+            }
+            
+            .countdown-value {
+                font-size: 1.8rem;
+                line-height: 1;
+                font-weight: 700;
+                display: block;
+            }
+            
+            .countdown-label {
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-top: 4px;
+                display: block;
+                color: #B8860B;
+            }
+            
+            /* Scrolled state - even more compact */
+            .header-fixed.scrolled {
+                padding: 0 !important;
+            }
+            
+            .header-fixed.scrolled .countdown-container {
+                flex-direction: row;
+                padding: 0.5rem 16px;
+                gap: 1rem;
+                justify-content: center;
+                align-items: center;
+                margin: 0 auto;
+            }
+            
+            .header-fixed.scrolled .countdown-container p {
+                display: none;
+            }
+            
+            .header-fixed.scrolled .countdown {
+                gap: 0.8rem;
+            }
+            
+            .header-fixed.scrolled .countdown-item {
+                width: 75px;
+                flex: 0 0 75px;
+                padding: 0.4rem 0.3rem;
+            }
+            
+            .header-fixed.scrolled .countdown-value {
+                font-size: 1.3rem;
+            }
+            
+            .header-fixed.scrolled .countdown-label {
+                font-size: 0.5rem;
+            }
+            
+            /* Botão flutuante ocupando largura total no mobile */
+            .floating-calendar-btn {
+                position: fixed !important;
+                left: 15px !important;
+                right: 15px !important;
+                bottom: 20px !important;
+                width: auto !important;
+                max-width: none !important;
+                transform: none !important;
+                justify-content: center !important;
+                padding: 16px 24px !important;
+                font-size: 15px !important;
+                border-radius: 50px !important;
+            }
+            
+            .floating-calendar-btn.hidden {
+                display: none !important;
+            }
+            
+            .floating-calendar-btn:hover {
+                transform: none !important;
+                box-shadow: 0 8px 25px rgba(184, 134, 11, 0.4) !important;
+            }
+            
+            .floating-calendar-btn span {
+                white-space: nowrap;
             }
 
-            .countdown-value {
+            /* Hierarquia visual simplificada - 2 níveis apenas */
+            .logo-text {
                 font-size: 2.5rem;
             }
-
-            .logo-text {
-                font-size: 3.5rem;
+            
+            .event-value,
+            .countdown-value {
+                font-size: 1.8rem;
             }
+            
+            .event-label,
+            .objectives-title,
+            .cta-title {
+                font-size: 0.875rem;
+                opacity: 0.7;
+            }
+            
+            /* Botões touch-friendly */
+            .qr-button {
+                min-height: 48px;
+                padding: 14px 24px;
+            }
+
 
             .event-card {
                 padding: 40px 20px;
@@ -920,7 +1539,8 @@
             }
 
             .countdown-item {
-                min-width: 70px;
+                width: 85px;
+                flex: 0 0 85px;
                 padding: 0.8rem 1.2rem;
             }
 
@@ -956,13 +1576,37 @@
     <div class="parallax-layer data-layer" id="dataLayer"></div>
     <div class="parallax-layer code-layer" id="codeLayer"></div>
     
+    <!-- Tech Effects -->
+    <div class="tech-lines" id="techLines"></div>
+    <div class="digital-rain" id="digitalRain"></div>
+    
+    <!-- Scanner Line -->
+    <div class="scanner-line"></div>
+    <div class="scan-glow"></div>
+    
+    <!-- Floating Calendar Button -->
+    <button class="floating-calendar-btn" onclick="openQRModal()" id="floatingBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+            <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/>
+        </svg>
+        <span>Adicionar na Agenda</span>
+    </button>
+    
+    <!-- Glowing Orbs -->
+    <div class="glow-orb" style="top: 20%; left: -150px;"></div>
+    <div class="glow-orb" style="bottom: 20%; right: -150px; animation-delay: -10s;"></div>
+    
     <!-- Particles -->
     <div class="particles-container" id="particles"></div>
 
     <!-- Fixed Header with Countdown -->
     <header class="header-fixed">
         <div class="countdown-container">
-            <div class="countdown-title">Faltam apenas</div>
+            <div class="countdown-title"><span class="desktop-only">Faltam Apenas</span><span class="mobile-only">Faltam</span></div>
             <div class="countdown" id="countdown">
                 <div class="countdown-item">
                     <span class="countdown-value" id="days">00</span>
@@ -989,7 +1633,7 @@
         <div class="container">
             <!-- Hero Section -->
             <section class="hero">
-                <h1 class="logo-text">QuarterTech</h1>
+                <h1 class="logo-text" data-text="QuarterTech">QuarterTech</h1>
                 <p class="subtitle">Save the Date</p>
             </section>
 
@@ -997,17 +1641,24 @@
             <section class="event-card">
                 <div class="event-grid">
                     <div class="event-item">
-                        <div class="event-label">Data</div>
-                        <div class="event-value">15 de Julho</div>
-                        <div class="event-weekday">Terça-feira</div>
+                        <img src="calendars.png" alt="Data" class="event-icon-img"/>
+                        <div class="event-info-content">
+                            <div class="event-label">Data</div>
+                            <div class="event-value">15 de Julho</div>
+                            <div class="event-weekday">Terça-feira</div>
+                        </div>
                     </div>
                     <div class="event-item">
-                        <div class="event-label">Horário</div>
-                        <div class="event-value">14:00 - 18:00</div>
+                        <img src="duration-alt.png" alt="Horário" class="event-icon-img"/>
+                        <div class="event-info-content">
+                            <div class="event-label">Horário</div>
+                            <div class="event-value">14:00 - 18:00</div>
+                        </div>
                     </div>
                     <div class="event-location">
                         <div class="event-label">Local</div>
-                        <div class="location-value">Bar Brahma</div>
+                        <img src="BarBrahma_gold.png" alt="Bar Brahma" class="brahma-logo-main"/>
+                        <div class="location-address">Avenida São João, 677 - República, São Paulo - SP</div>
                     </div>
                 </div>
 
@@ -1062,8 +1713,8 @@
             <!-- CTA Section -->
             <section class="cta-section">
                 <h3 class="cta-title">Reserve sua Agenda</h3>
-                <button class="qr-button" onclick="alert('QR Code em breve!')">
-                    <span>QR CODE</span>
+                <button class="qr-button" onclick="openQRModal()">
+                    <span>Adicionar na Agenda</span>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="3" width="7" height="7"/>
                         <rect x="14" y="3" width="7" height="7"/>
@@ -1074,6 +1725,11 @@
             </section>
         </div>
     </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© Fablab. Todos os direitos reservados. 2025</p>
+    </footer>
 
     <!-- Data Visualization Animation -->
     <div class="data-visual">
@@ -1081,6 +1737,23 @@
         <div class="data-bar"></div>
         <div class="data-bar"></div>
         <div class="data-bar"></div>
+    </div>
+    
+    <!-- QR Code Modal -->
+    <div class="qr-modal" id="qrModal">
+        <div class="qr-modal-content">
+            <button class="close-modal" onclick="closeQRModal()">&times;</button>
+            <h3 class="qr-modal-title">Adicione à sua Agenda</h3>
+            <button class="calendar-direct-btn" id="calendarDirectBtn" onclick="openCalendarDirectly()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <span>Adicionar ao Calendário</span>
+            </button>
+        </div>
     </div>
 
     <script>
@@ -1128,32 +1801,94 @@
         // Create Floating Particles
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
+            const particleCount = 40;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
-                particle.className = 'particle';
+                
+                // Random particle type
+                const type = Math.random();
+                if (type < 0.3) {
+                    particle.className = 'particle small';
+                } else if (type > 0.7) {
+                    particle.className = 'particle large';
+                } else {
+                    particle.className = 'particle';
+                }
                 
                 // Random position
                 particle.style.left = Math.random() * 100 + '%';
                 
                 // Random animation delay
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                
-                // Random size
-                const size = Math.random() * 4 + 2;
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
+                particle.style.animationDelay = Math.random() * 25 + 's';
                 
                 // Random horizontal movement
-                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                particle.style.animationDuration = (Math.random() * 15 + 20) + 's';
                 
                 particlesContainer.appendChild(particle);
             }
         }
         
-        // Initialize particles
+        // Create Tech Connection Lines
+        function createTechLines() {
+            const techLinesContainer = document.getElementById('techLines');
+            const lineCount = 8;
+            
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.className = 'tech-line';
+                
+                // Random position and size
+                const isHorizontal = Math.random() > 0.5;
+                
+                if (isHorizontal) {
+                    line.style.width = Math.random() * 50 + 20 + '%';
+                    line.style.height = '1px';
+                    line.style.top = Math.random() * 100 + '%';
+                    line.style.left = Math.random() * 50 + '%';
+                } else {
+                    line.style.width = '1px';
+                    line.style.height = Math.random() * 50 + 20 + '%';
+                    line.style.top = Math.random() * 50 + '%';
+                    line.style.left = Math.random() * 100 + '%';
+                }
+                
+                line.style.animationDelay = Math.random() * 8 + 's';
+                techLinesContainer.appendChild(line);
+            }
+        }
+        
+        // Create Digital Rain Effect
+        function createDigitalRain() {
+            const rainContainer = document.getElementById('digitalRain');
+            const characters = '01';
+            const columnCount = 15;
+            
+            for (let i = 0; i < columnCount; i++) {
+                const column = document.createElement('div');
+                column.style.position = 'absolute';
+                column.style.left = (i * 100 / columnCount) + Math.random() * 5 + '%';
+                column.style.width = '20px';
+                column.style.height = '100%';
+                
+                // Create multiple drops per column
+                for (let j = 0; j < 5; j++) {
+                    const drop = document.createElement('div');
+                    drop.className = 'rain-drop';
+                    drop.textContent = characters[Math.floor(Math.random() * characters.length)];
+                    drop.style.animationDelay = (Math.random() * 15 + j * 3) + 's';
+                    drop.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                    column.appendChild(drop);
+                }
+                
+                rainContainer.appendChild(column);
+            }
+        }
+        
+        // Initialize all effects
         createParticles();
+        createTechLines();
+        createDigitalRain();
         
         // Create code layer content
         function createCodeLayer() {
@@ -1182,6 +1917,26 @@
         
         createCodeLayer();
         
+        // Intersection Observer for floating button
+        const floatingBtn = document.getElementById('floatingBtn');
+        const ctaSection = document.querySelector('.cta-section');
+        
+        const ctaObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    floatingBtn.classList.add('hidden');
+                } else {
+                    floatingBtn.classList.remove('hidden');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        if (ctaSection) {
+            ctaObserver.observe(ctaSection);
+        }
+
         // Parallax Effect on Scroll
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
@@ -1243,10 +1998,47 @@
         animateCursor();
         
         // Cursor hover effects
-        const hoverElements = document.querySelectorAll('button, a, .countdown-item, .objective-item, .logo-slot');
+        const hoverElements = document.querySelectorAll('button, a, .countdown-item, .objective-item, .logo-slot, .close-modal, .floating-calendar-btn');
         hoverElements.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+        });
+        
+        // Mouse trail effect
+        let mouseTrail = [];
+        const maxTrailSize = 20;
+        
+        document.addEventListener('mousemove', (e) => {
+            // Create trail particle
+            if (Math.random() > 0.9) {
+                const trail = document.createElement('div');
+                trail.style.position = 'fixed';
+                trail.style.width = '2px';
+                trail.style.height = '2px';
+                trail.style.background = '#B8860B';
+                trail.style.borderRadius = '50%';
+                trail.style.pointerEvents = 'none';
+                trail.style.left = e.clientX + 'px';
+                trail.style.top = e.clientY + 'px';
+                trail.style.zIndex = '9998';
+                trail.style.opacity = '0.6';
+                trail.style.transition = 'all 1s ease-out';
+                
+                document.body.appendChild(trail);
+                mouseTrail.push(trail);
+                
+                // Animate trail
+                setTimeout(() => {
+                    trail.style.transform = `translate(${Math.random() * 40 - 20}px, ${Math.random() * 40 - 20}px) scale(0)`;
+                    trail.style.opacity = '0';
+                }, 10);
+                
+                // Remove old trails
+                if (mouseTrail.length > maxTrailSize) {
+                    const oldTrail = mouseTrail.shift();
+                    setTimeout(() => oldTrail.remove(), 1000);
+                }
+            }
         });
         
         // Hide cursor when leaving window
@@ -1258,6 +2050,79 @@
         document.addEventListener('mouseenter', () => {
             cursor.style.opacity = '1';
             cursorDot.style.opacity = '1';
+        });
+        
+        // QR Code Functions
+        function generateICSFile() {
+            const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//QuarterTech//Event//PT
+BEGIN:VEVENT
+UID:quartertech-2025@example.com
+DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')}
+DTSTART:20250715T140000
+DTEND:20250715T180000
+SUMMARY:QuarterTech
+DESCRIPTION:Evento QuarterTech - Resultados do Quarter\\, Metas e Objetivos\\, Novos Produtos e Tendências do Mercado
+LOCATION:Bar Brahma\\, Avenida São João\\, 677\\, República\\, São Paulo\\, SP
+STATUS:CONFIRMED
+BEGIN:VALARM
+TRIGGER:-PT24H
+ACTION:DISPLAY
+DESCRIPTION:QuarterTech - Amanhã às 14:00
+END:VALARM
+BEGIN:VALARM
+TRIGGER:-PT2H
+ACTION:DISPLAY
+DESCRIPTION:QuarterTech - Em 2 horas
+END:VALARM
+END:VEVENT
+END:VCALENDAR`;
+            
+            return icsContent;
+        }
+        
+        // Detect mobile device
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   (window.innerWidth <= 768);
+        }
+        
+        function openQRModal() {
+            const modal = document.getElementById('qrModal');
+            modal.classList.add('active');
+            
+            // Update cursor hover for modal elements
+            const modalElements = document.querySelectorAll('.close-modal');
+            modalElements.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+            });
+        }
+        
+        function closeQRModal() {
+            const modal = document.getElementById('qrModal');
+            modal.classList.remove('active');
+        }
+        
+        function openCalendarDirectly() {
+            const startDate = '20250715T140000';
+            const endDate = '20250715T180000';
+            const title = encodeURIComponent('QuarterTech');
+            const details = encodeURIComponent('Evento QuarterTech - Resultados do Quarter, Metas e Objetivos, Novos Produtos e Tendências do Mercado');
+            const location = encodeURIComponent('Bar Brahma, Avenida São João, 677, República, São Paulo, SP');
+            
+            const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}&sf=true&output=xml`;
+            
+            window.open(googleCalendarUrl, '_blank');
+            closeQRModal();
+        }
+        
+        // Close modal on click outside
+        document.getElementById('qrModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeQRModal();
+            }
         });
     </script>
 </body>
