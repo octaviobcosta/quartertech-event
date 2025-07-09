@@ -6,7 +6,7 @@
     <title>QuarterTech - Save the Date</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,136 +14,191 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --gold: #FFD700;
-            --gold-light: #FFF3B8;
-            --gold-dark: #DAA520;
-            --gold-accent: #B8860B;
-            --bg-primary: #0A0A0A;
-            --bg-secondary: #0F0F0F;
-            --bg-card: #141414;
-            --text-primary: #FFFFFF;
-            --text-secondary: #B0B0B0;
-            --text-muted: #808080;
-            --border-subtle: rgba(255, 215, 0, 0.15);
-            --border-light: rgba(255, 255, 255, 0.08);
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            scroll-behavior: smooth;
+            cursor: crosshair;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(218, 165, 32, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
         }
 
-        /* Fixed Header with Glassmorphism Countdown */
+        /* Background grafite escuro com tech */
+        .tech-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            z-index: -2;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(218, 165, 32, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(218, 165, 32, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Header Fixed com Countdown */
         .header-fixed {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-subtle);
             z-index: 1000;
-            padding: 30px 0;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            padding: 20px 0;
         }
 
-        .header-content {
-            max-width: 1400px;
+        /* Countdown Container - Exatamente como no arquivo original */
+        .countdown-container {
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 2.5rem 3rem;
+            background: linear-gradient(135deg, 
+                rgba(218, 165, 32, 0.03) 0%, 
+                rgba(255, 255, 255, 0.01) 50%, 
+                rgba(218, 165, 32, 0.03) 100%);
+            border-radius: 30px;
+            border: 1px solid rgba(218, 165, 32, 0.15);
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        
+        .countdown-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #daa520, transparent, #daa520);
+            border-radius: 30px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .countdown-container:hover::before {
+            opacity: 0.3;
         }
 
-        /* Logo Simples e Elegante */
-        .logo-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2.2rem;
+        .countdown-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            color: #daa520;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-align: center;
+            font-weight: 300;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 2.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(218, 165, 32, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            min-width: 110px;
+        }
+        
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            border-color: #daa520;
+            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.2);
+        }
+        
+        .countdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(218, 165, 32, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .countdown-item:hover::before {
+            opacity: 1;
+        }
+
+        .countdown-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
             font-weight: 700;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% 200%;
-            animation: gradient-shift 8s ease infinite;
+            color: #daa520;
+            display: block;
+            line-height: 1;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
         }
-
-        @keyframes gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        /* Countdown Grande no Header */
-        .countdown-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 215, 0, 0.05);
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            border-radius: 100px;
-            padding: 12px 30px;
-            backdrop-filter: blur(10px);
+        
+        .countdown-item:hover .countdown-value {
+            transform: scale(1.1);
         }
 
         .countdown-label {
             font-size: 0.9rem;
-            color: var(--gold);
+            color: #a0a0a0;
             text-transform: uppercase;
+            margin-top: 0.8rem;
             letter-spacing: 2px;
-            font-weight: 600;
-            margin-right: 20px;
-        }
-
-        .countdown-unit {
-            display: flex;
-            align-items: baseline;
-            gap: 6px;
-        }
-
-        .countdown-number {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            line-height: 1;
-            letter-spacing: -1px;
-            min-width: 50px;
-            text-align: center;
-        }
-
-        .countdown-text {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            text-transform: lowercase;
-            font-weight: 400;
-        }
-
-        .countdown-separator {
-            font-size: 1.8rem;
-            color: var(--gold);
             font-weight: 300;
-            margin: 0 10px;
-            opacity: 0.6;
-            animation: blink 2s ease-in-out infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 0.2; }
+            position: relative;
+            z-index: 1;
         }
 
         /* Main Content */
         .main-content {
-            margin-top: 120px;
-            min-height: 100vh;
-            padding: 80px 20px;
+            margin-top: 200px;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .container {
@@ -151,122 +206,100 @@
             margin: 0 auto;
         }
 
-        /* Hero Section */
+        /* Logo QuarterTech - Menos brilho */
         .hero {
             text-align: center;
-            margin-bottom: 100px;
-            position: relative;
+            margin-bottom: 80px;
         }
 
-        .hero-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: clamp(4rem, 10vw, 7rem);
-            font-weight: 800;
-            letter-spacing: -3px;
-            margin-bottom: 20px;
-            line-height: 0.9;
-            background: linear-gradient(135deg, var(--text-primary) 0%, var(--gold-light) 50%, var(--text-primary) 100%);
+        .logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #daa520, #ffd700, #daa520);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-size: 200% 200%;
-            animation: gradient-shift 10s ease infinite;
+            letter-spacing: -3px;
+            position: relative;
+            display: inline-block;
+            animation: subtle-shimmer 6s ease-in-out infinite;
+        }
+        
+        @keyframes subtle-shimmer {
+            0%, 100% { 
+                background-position: 0% 50%;
+                opacity: 0.9;
+            }
+            50% { 
+                background-position: 100% 50%;
+                opacity: 1;
+            }
         }
 
-        .hero-subtitle {
+        .subtitle {
             font-size: 1.2rem;
-            color: var(--gold);
+            color: #daa520;
+            margin-top: 1rem;
             letter-spacing: 6px;
             text-transform: uppercase;
-            font-weight: 500;
+            font-weight: 300;
+            opacity: 0.8;
         }
 
-        /* Event Info - Design Melhorado */
+        /* Event Info Card */
         .event-card {
-            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
-            border: 1px solid var(--border-light);
-            border-radius: 32px;
-            padding: 80px;
-            margin-bottom: 80px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-        }
-
-        .event-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(135deg, var(--gold), transparent, var(--gold));
-            border-radius: 32px;
-            opacity: 0.1;
-            z-index: -1;
+            background: linear-gradient(135deg, rgba(15, 15, 15, 0.6), rgba(25, 25, 25, 0.4));
+            border: 1px solid rgba(218, 165, 32, 0.1);
+            border-radius: 30px;
+            padding: 60px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .event-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 50px;
-            margin-bottom: 50px;
+            gap: 40px;
+            margin-bottom: 40px;
         }
 
         .event-item {
             text-align: center;
-            padding: 30px;
-            border-radius: 20px;
+            padding: 25px;
+            border-radius: 16px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .event-item::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .event-item:hover::after {
-            opacity: 1;
+            transition: all 0.3s ease;
         }
 
         .event-item:hover {
-            background: rgba(255, 215, 0, 0.03);
-            border-color: rgba(255, 215, 0, 0.15);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.1);
+            background: rgba(218, 165, 32, 0.03);
+            border-color: rgba(218, 165, 32, 0.15);
+            transform: translateY(-2px);
         }
 
         .event-label {
-            font-size: 0.85rem;
-            color: var(--gold);
+            font-size: 0.8rem;
+            color: #daa520;
             text-transform: uppercase;
-            letter-spacing: 2.5px;
-            margin-bottom: 16px;
-            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            font-weight: 500;
         }
 
         .event-value {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #ffffff;
             line-height: 1.1;
         }
 
         .event-weekday {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
+            font-size: 1.1rem;
+            color: #a0a0a0;
             margin-top: 8px;
             font-weight: 400;
         }
@@ -274,215 +307,211 @@
         .event-location {
             grid-column: 1 / -1;
             text-align: center;
-            padding: 40px;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 215, 0, 0.02));
-            border-radius: 20px;
-            border: 1px solid rgba(255, 215, 0, 0.1);
+            padding: 35px;
+            background: rgba(218, 165, 32, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(218, 165, 32, 0.1);
         }
 
         .location-value {
-            font-family: 'Poppins', sans-serif;
-            font-size: 3rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: #daa520;
         }
 
-        /* Objectives - Design Aprimorado */
+        /* Objectives */
         .objectives {
-            margin-top: 50px;
+            margin-top: 40px;
         }
 
         .objectives-title {
             text-align: center;
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-bottom: 40px;
+            font-size: 1rem;
+            color: #a0a0a0;
+            margin-bottom: 30px;
             font-weight: 400;
-            letter-spacing: 1px;
         }
 
         .objectives-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
         }
 
         .objective-item {
             display: flex;
             align-items: center;
-            gap: 16px;
-            padding: 20px 24px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            gap: 12px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
         }
 
         .objective-item:hover {
-            background: rgba(255, 215, 0, 0.05);
-            border-color: rgba(255, 215, 0, 0.15);
-            transform: translateX(8px);
-            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.1);
+            background: rgba(218, 165, 32, 0.03);
+            border-color: rgba(218, 165, 32, 0.1);
+            transform: translateX(4px);
         }
 
         .objective-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 12px;
+            width: 36px;
+            height: 36px;
+            background: rgba(218, 165, 32, 0.1);
+            border: 1px solid rgba(218, 165, 32, 0.2);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             flex-shrink: 0;
         }
 
         .objective-text {
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            font-weight: 500;
-            letter-spacing: 0.3px;
+            font-size: 0.9rem;
+            color: #ffffff;
+            font-weight: 400;
         }
 
-        /* Companies Section */
-        .companies-section {
-            margin: 120px 0;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.2rem;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-weight: 600;
+        /* Logos Container - Exatamente como no arquivo original */
+        .logos-container {
+            background: linear-gradient(135deg, rgba(15, 15, 15, 0.8), rgba(25, 25, 25, 0.6));
+            border-radius: 30px;
+            padding: 4rem 3rem;
+            margin-top: 4rem;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(218, 165, 32, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             position: relative;
-            display: inline-block;
-            padding: 0 40px;
+            overflow: hidden;
         }
 
-        .section-title::before,
-        .section-title::after {
+        .logos-title {
+            font-size: 1.1rem;
+            color: #daa520;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 3rem;
+            text-align: center;
+            font-weight: 300;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .logos-title::after {
             content: '';
             position: absolute;
-            top: 50%;
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold));
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #daa520, transparent);
         }
 
-        .section-title::before {
-            right: 100%;
-        }
-
-        .section-title::after {
-            left: 100%;
-            transform: rotate(180deg);
-        }
-
-        .companies-grid {
+        .logos-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            max-width: 1000px;
-            margin: 0 auto;
+            gap: 3rem;
+            align-items: center;
+            justify-items: center;
+            row-gap: 3.5rem;
         }
 
-        .company-card {
-            aspect-ratio: 16/10;
-            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
-            border: 1px solid rgba(255, 255, 255, 0.06);
+        .logo-slot {
+            width: 220px;
+            height: 110px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 20px;
-            padding: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.9rem;
+            color: #606060;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
         }
 
-        .company-card::before {
+        .logo-slot::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.15), transparent);
-            transition: all 0.6s ease;
-            transform: translate(-50%, -50%);
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(45deg, transparent, rgba(218, 165, 32, 0.05), transparent);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
         }
 
-        .company-card:hover::before {
-            width: 250%;
-            height: 250%;
+        .logo-slot:hover::before {
+            top: -50%;
+            left: -50%;
+            opacity: 1;
         }
 
-        .company-card:hover {
-            border-color: rgba(255, 215, 0, 0.3);
-            transform: translateY(-6px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.15);
+        .logo-slot:hover {
+            background: rgba(218, 165, 32, 0.03);
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.1);
         }
-
-        .company-card img {
-            max-width: 85%;
-            max-height: 70px;
+        
+        .logo-slot img {
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
-            filter: brightness(0.85) contrast(1.1);
+            filter: brightness(0.9) contrast(1.1);
             transition: all 0.4s ease;
-            position: relative;
-            z-index: 1;
+        }
+        
+        .logo-slot:hover img {
+            filter: brightness(1.1) contrast(1.2);
+            transform: scale(1.05);
         }
 
         /* Logo da Fábrica de Bares maior */
-        .company-card:nth-child(2) img {
-            max-height: 85px;
-            max-width: 90%;
+        .logo-slot:nth-child(2) img {
+            transform: scale(1.2);
         }
 
-        .company-card:hover img {
-            filter: brightness(1.2) contrast(1.2);
-            transform: scale(1.08);
+        .logo-slot:nth-child(2):hover img {
+            transform: scale(1.25);
         }
 
         /* CTA Section */
         .cta-section {
             text-align: center;
-            margin: 120px 0 80px;
+            margin: 80px 0 60px;
         }
 
         .cta-title {
-            font-family: 'Poppins', sans-serif;
             font-size: 1.2rem;
-            color: var(--gold);
-            margin-bottom: 40px;
+            color: #daa520;
+            margin-bottom: 30px;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            font-weight: 600;
+            letter-spacing: 3px;
+            font-weight: 400;
         }
 
         .qr-button {
             display: inline-flex;
             align-items: center;
-            gap: 16px;
-            padding: 20px 60px;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
-            border: 2px solid var(--gold);
-            border-radius: 60px;
-            color: var(--gold);
-            font-size: 1rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
+            gap: 12px;
+            padding: 18px 50px;
+            background: transparent;
+            border: 1px solid #daa520;
+            border-radius: 50px;
+            color: #daa520;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
@@ -496,21 +525,21 @@
             left: 50%;
             width: 0;
             height: 0;
-            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            background: #daa520;
             border-radius: 50%;
             transition: all 0.5s ease;
             transform: translate(-50%, -50%);
         }
 
         .qr-button:hover::before {
-            width: 400px;
-            height: 400px;
+            width: 350px;
+            height: 350px;
         }
 
         .qr-button:hover {
-            color: var(--bg-primary);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
+            color: #0a0a0a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.2);
         }
 
         .qr-button span {
@@ -518,189 +547,125 @@
             z-index: 1;
         }
 
-        /* Background Pattern Sutil */
-        .bg-pattern {
+        /* Data Visualization Animation */
+        .data-visual {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0.02;
-            z-index: 0;
+            bottom: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            opacity: 0.3;
         }
 
-        .pattern-grid {
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(var(--gold) 1px, transparent 1px),
-                linear-gradient(90deg, var(--gold) 1px, transparent 1px);
-            background-size: 80px 80px;
-        }
-
-        /* Floating Particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .particle {
+        .data-bar {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--gold);
-            border-radius: 50%;
-            opacity: 0;
-            animation: float-up 15s infinite;
+            bottom: 0;
+            width: 15px;
+            background: linear-gradient(180deg, #daa520, #ffd700);
+            animation: data-flow 3s ease-in-out infinite;
         }
 
-        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .particle:nth-child(2) { left: 30%; animation-delay: 3s; }
-        .particle:nth-child(3) { left: 50%; animation-delay: 6s; }
-        .particle:nth-child(4) { left: 70%; animation-delay: 9s; }
-        .particle:nth-child(5) { left: 90%; animation-delay: 12s; }
+        .data-bar:nth-child(1) { left: 10px; height: 40%; animation-delay: 0s; }
+        .data-bar:nth-child(2) { left: 30px; height: 70%; animation-delay: 0.5s; }
+        .data-bar:nth-child(3) { left: 50px; height: 55%; animation-delay: 1s; }
+        .data-bar:nth-child(4) { left: 70px; height: 85%; animation-delay: 1.5s; }
 
-        @keyframes float-up {
-            0% {
-                transform: translateY(100vh) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.4;
-            }
-            90% {
-                opacity: 0.4;
-            }
-            100% {
-                transform: translateY(-100px) scale(1);
-                opacity: 0;
-            }
+        @keyframes data-flow {
+            0%, 100% { transform: scaleY(1); opacity: 0.3; }
+            50% { transform: scaleY(1.2); opacity: 0.8; }
         }
 
         /* Responsive */
-        @media (max-width: 968px) {
-            .header-content {
-                flex-direction: column;
-                gap: 30px;
+        @media (max-width: 768px) {
+            .countdown-container {
+                padding: 2rem 1.5rem;
             }
 
-            .countdown-header {
-                padding: 10px 20px;
+            .countdown {
+                gap: 1.5rem;
             }
 
-            .countdown-number {
-                font-size: 1.8rem;
-                min-width: 40px;
+            .countdown-item {
+                min-width: 80px;
+                padding: 1rem 1.5rem;
             }
 
-            .countdown-label {
-                font-size: 0.8rem;
+            .countdown-value {
+                font-size: 2.5rem;
             }
 
-            .hero-title {
-                font-size: 4rem;
+            .logo-text {
+                font-size: 3.5rem;
             }
 
             .event-card {
-                padding: 50px 30px;
+                padding: 40px 20px;
             }
 
             .event-grid {
                 grid-template-columns: 1fr;
-                gap: 30px;
+                gap: 20px;
             }
 
-            .companies-grid {
+            .logos-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 30px;
+                gap: 2rem;
             }
         }
 
-        @media (max-width: 568px) {
-            .countdown-header {
-                gap: 4px;
-                padding: 8px 16px;
+        @media (max-width: 480px) {
+            .countdown {
+                gap: 1rem;
             }
 
-            .countdown-number {
-                font-size: 1.4rem;
-                min-width: 30px;
+            .countdown-item {
+                min-width: 70px;
+                padding: 0.8rem 1.2rem;
             }
 
-            .countdown-separator {
-                font-size: 1.2rem;
-                margin: 0 4px;
+            .countdown-value {
+                font-size: 2rem;
             }
 
             .countdown-label {
                 font-size: 0.7rem;
-                margin-right: 12px;
             }
 
-            .hero-title {
-                font-size: 3rem;
-            }
-
-            .companies-grid {
+            .logos-grid {
                 grid-template-columns: 1fr;
             }
 
-            .event-value {
-                font-size: 2rem;
-            }
-
-            .location-value {
-                font-size: 2.2rem;
+            .logo-text {
+                font-size: 2.8rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Background Pattern -->
-    <div class="bg-pattern">
-        <div class="pattern-grid"></div>
-    </div>
+    <!-- Background -->
+    <div class="tech-background"></div>
+    <div class="grid-overlay"></div>
 
-    <!-- Floating Particles -->
-    <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
-
-    <!-- Fixed Header with Glassmorphism Countdown -->
+    <!-- Fixed Header with Countdown -->
     <header class="header-fixed">
-        <div class="header-content">
-            <div class="logo-text">QuarterTech</div>
-
-            <div class="countdown-header" id="countdown-header">
-                <span class="countdown-label">Faltam apenas</span>
-                <div class="countdown-unit">
-                    <span class="countdown-number" id="days-header">00</span>
-                    <span class="countdown-text">dias</span>
+        <div class="countdown-container">
+            <div class="countdown-title">Faltam apenas</div>
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-value" id="days">00</span>
+                    <span class="countdown-label">Dias</span>
                 </div>
-                <span class="countdown-separator">:</span>
-                <div class="countdown-unit">
-                    <span class="countdown-number" id="hours-header">00</span>
-                    <span class="countdown-text">horas</span>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="hours">00</span>
+                    <span class="countdown-label">Horas</span>
                 </div>
-                <span class="countdown-separator">:</span>
-                <div class="countdown-unit">
-                    <span class="countdown-number" id="minutes-header">00</span>
-                    <span class="countdown-text">min</span>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="minutes">00</span>
+                    <span class="countdown-label">Minutos</span>
                 </div>
-                <span class="countdown-separator">:</span>
-                <div class="countdown-unit">
-                    <span class="countdown-number" id="seconds-header">00</span>
-                    <span class="countdown-text">seg</span>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="seconds">00</span>
+                    <span class="countdown-label">Segundos</span>
                 </div>
             </div>
         </div>
@@ -711,8 +676,8 @@
         <div class="container">
             <!-- Hero Section -->
             <section class="hero">
-                <h1 class="hero-title">QuarterTech</h1>
-                <p class="hero-subtitle">Save the Date</p>
+                <h1 class="logo-text">QuarterTech</h1>
+                <p class="subtitle">Save the Date</p>
             </section>
 
             <!-- Event Information -->
@@ -757,38 +722,36 @@
             </section>
 
             <!-- Companies Section -->
-            <section class="companies-section">
-                <div class="section-header">
-                    <h2 class="section-title">Empresas Participantes</h2>
-                </div>
-                <div class="companies-grid">
-                    <div class="company-card">
+            <div class="logos-container">
+                <h3 class="logos-title">Empresas Participantes</h3>
+                <div class="logos-grid">
+                    <div class="logo-slot">
                         <img src="logoB.png" alt="eshows">
                     </div>
-                    <div class="company-card">
+                    <div class="logo-slot">
                         <img src="logofbcor.png" alt="Fábrica de Bares">
                     </div>
-                    <div class="company-card">
+                    <div class="logo-slot">
                         <img src="estaff_logo_transparent.png" alt="estaff">
                     </div>
-                    <div class="company-card">
+                    <div class="logo-slot">
                         <img src="Blue.me.png" alt="Blue.me">
                     </div>
-                    <div class="company-card">
+                    <div class="logo-slot">
                         <img src="logofablab.png" alt="FabLab">
                     </div>
-                    <div class="company-card">
+                    <div class="logo-slot">
                         <img src="Imagem do WhatsApp de 2025-07-08 à(s) 19.16.37_fd7c4a3f_clipped_rev_1.png" alt="espaces">
                     </div>
                 </div>
-            </section>
+            </div>
 
             <!-- CTA Section -->
             <section class="cta-section">
                 <h3 class="cta-title">Reserve sua Agenda</h3>
                 <button class="qr-button" onclick="alert('QR Code em breve!')">
                     <span>QR CODE</span>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="3" width="7" height="7"/>
                         <rect x="14" y="3" width="7" height="7"/>
                         <rect x="3" y="14" width="7" height="7"/>
@@ -798,6 +761,14 @@
             </section>
         </div>
     </main>
+
+    <!-- Data Visualization Animation -->
+    <div class="data-visual">
+        <div class="data-bar"></div>
+        <div class="data-bar"></div>
+        <div class="data-bar"></div>
+        <div class="data-bar"></div>
+    </div>
 
     <script>
         // Countdown Timer
@@ -812,37 +783,18 @@
                 const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-                // Update header countdown
-                document.getElementById('days-header').textContent = String(days).padStart(2, '0');
-                document.getElementById('hours-header').textContent = String(hours).padStart(2, '0');
-                document.getElementById('minutes-header').textContent = String(minutes).padStart(2, '0');
-                document.getElementById('seconds-header').textContent = String(seconds).padStart(2, '0');
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
             } else {
-                document.querySelector('.countdown-label').textContent = 'Evento em andamento!';
-                document.querySelector('.countdown-header').style.background = 'rgba(255, 215, 0, 0.1)';
+                document.querySelector('.countdown-title').textContent = 'Evento em andamento!';
             }
         }
 
         // Update countdown every second
         updateCountdown();
         setInterval(updateCountdown, 1000);
-
-        // Dynamic header effect
-        document.addEventListener('DOMContentLoaded', function() {
-            const header = document.querySelector('.header-fixed');
-            
-            window.addEventListener('scroll', function() {
-                const currentScroll = window.pageYOffset;
-                
-                if (currentScroll > 150) {
-                    header.style.padding = '20px 0';
-                    header.style.background = 'rgba(10, 10, 10, 0.95)';
-                } else {
-                    header.style.padding = '30px 0';
-                    header.style.background = 'rgba(10, 10, 10, 0.85)';
-                }
-            });
-        });
     </script>
 </body>
 </html>
