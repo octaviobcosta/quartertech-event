@@ -823,6 +823,10 @@
             opacity: 0;
             transform: translateY(50px) scale(0.95);
             transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
         .logos-container.visible {
@@ -853,18 +857,52 @@
             background: linear-gradient(90deg, transparent, #B8860B, transparent);
         }
 
-        .logos-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
-            align-items: center;
-            justify-items: center;
-            row-gap: 3.5rem;
+        /* Modern Infinite Scroll Carousel */
+        .logos-carousel-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin: 2rem 0;
+            padding: 2rem 0;
+            -webkit-mask: linear-gradient(90deg, 
+                transparent,
+                rgba(0,0,0,1) 10%,
+                rgba(0,0,0,1) 90%,
+                transparent
+            );
+            mask: linear-gradient(90deg, 
+                transparent,
+                rgba(0,0,0,1) 10%,
+                rgba(0,0,0,1) 90%,
+                transparent
+            );
+        }
+        
+        .logos-carousel-track {
+            display: flex;
+            gap: 4rem;
+            animation: scrollLogos 25s linear infinite;
+            width: fit-content;
+            will-change: transform;
+        }
+        
+        .logos-carousel-wrapper:hover .logos-carousel-track {
+            animation-play-state: paused;
+        }
+        
+        @keyframes scrollLogos {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         .logo-slot {
-            width: 220px;
-            height: 110px;
+            flex: 0 0 auto;
+            width: 250px;
+            height: 150px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 20px;
@@ -874,10 +912,10 @@
             font-size: 0.9rem;
             color: #606060;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
             overflow: hidden;
             padding: 1.5rem;
             backdrop-filter: blur(10px);
+            position: relative;
         }
 
         .logo-slot::before {
@@ -899,32 +937,55 @@
         }
 
         .logo-slot:hover {
-            background: rgba(184, 134, 11, 0.02);
-            border: 1px solid rgba(184, 134, 11, 0.15);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.05);
+            background: rgba(184, 134, 11, 0.03);
+            border: 1px solid rgba(184, 134, 11, 0.2);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(184, 134, 11, 0.2);
+        }
+        
+        .logo-slot:hover::before {
+            opacity: 1;
         }
         
         .logo-slot img {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: 90%;
+            max-height: 90%;
+            width: auto;
+            height: auto;
             object-fit: contain;
             filter: brightness(0.9) contrast(1.1);
             transition: all 0.4s ease;
         }
         
         .logo-slot:hover img {
-            filter: brightness(1.05) contrast(1.1);
-            transform: scale(1.02);
+            filter: brightness(1.1) contrast(1.05);
+            transform: scale(1.05);
         }
-
-        /* Logo da Fábrica de Bares maior */
-        .logo-slot:nth-child(2) img {
-            transform: scale(1.2);
+        
+        /* Glow effect on hover */
+        .logo-slot::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #B8860B, transparent, #B8860B);
+            border-radius: 20px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
         }
-
-        .logo-slot:nth-child(2):hover img {
-            transform: scale(1.25);
+        
+        .logo-slot:hover::after {
+            opacity: 0.3;
+            animation: glowRotate 3s linear infinite;
+        }
+        
+        @keyframes glowRotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* CTA Section */
@@ -1433,18 +1494,40 @@
             .logos-container {
                 padding: 2rem 1rem;
                 margin-top: 2rem;
+                min-height: 400px;
             }
             
-            .logos-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-                justify-items: center;
+            .logos-carousel-wrapper {
+                margin: 1rem -16px;
+                padding: 1.5rem 0;
+                -webkit-mask: linear-gradient(90deg, 
+                    transparent,
+                    rgba(0,0,0,1) 5%,
+                    rgba(0,0,0,1) 95%,
+                    transparent
+                );
+                mask: linear-gradient(90deg, 
+                    transparent,
+                    rgba(0,0,0,1) 5%,
+                    rgba(0,0,0,1) 95%,
+                    transparent
+                );
+            }
+            
+            .logos-carousel-track {
+                gap: 2rem;
+                animation: scrollLogos 20s linear infinite;
             }
             
             .logo-slot {
-                width: 140px;
-                height: 140px;
-                padding: 1.5rem;
+                width: 180px;
+                height: 110px;
+                padding: 1.2rem;
+            }
+            
+            .logo-slot img {
+                max-width: 90%;
+                max-height: 90%;
             }
         }
 
@@ -1471,15 +1554,19 @@
                 padding: 2rem 1rem;
             }
             
-            .logos-grid {
-                grid-template-columns: 1fr;
+            .logos-carousel-wrapper {
+                margin: 1rem -1rem;
+            }
+            
+            .logos-carousel-track {
                 gap: 1.5rem;
+                animation-duration: 15s;
             }
             
             .logo-slot {
-                width: 180px;
-                height: 120px;
-                margin: 0 auto;
+                width: 160px;
+                height: 100px;
+                padding: 1rem;
             }
 
             .logo-text {
@@ -1578,7 +1665,7 @@
                         <img src="duration-alt.png" alt="Horário" class="event-icon-img"/>
                         <div class="event-info-content">
                             <div class="event-label">Horário</div>
-                            <div class="event-value">14:00 - 18:00</div>
+                            <div class="event-value">14:00 - 18:30</div>
                         </div>
                     </div>
                     <div class="event-location">
@@ -1614,24 +1701,40 @@
             <!-- Companies Section -->
             <div class="logos-container">
                 <h3 class="logos-title">Empresas Participantes</h3>
-                <div class="logos-grid">
-                    <div class="logo-slot">
-                        <img src="logoB.png" alt="eshows">
-                    </div>
-                    <div class="logo-slot">
-                        <img src="logofbcor.png" alt="Fábrica de Bares">
-                    </div>
-                    <div class="logo-slot">
-                        <img src="estaff_logo_transparent.png" alt="estaff">
-                    </div>
-                    <div class="logo-slot">
-                        <img src="Blue.me.png" alt="Blue.me">
-                    </div>
-                    <div class="logo-slot">
-                        <img src="logofablab.png" alt="FabLab">
-                    </div>
-                    <div class="logo-slot">
-                        <img src="Imagem do WhatsApp de 2025-07-08 à(s) 19.16.37_fd7c4a3f_clipped_rev_1.png" alt="espaces">
+                <div class="logos-carousel-wrapper">
+                    <div class="logos-carousel-track">
+                        <!-- Primeiro conjunto de logos -->
+                        <div class="logo-slot">
+                            <img src="logoB.png" alt="eshows">
+                        </div>
+                        <div class="logo-slot">
+                            <img src="estaff_logo_transparent.png" alt="estaff">
+                        </div>
+                        <div class="logo-slot">
+                            <img src="Blue.me.png" alt="Blue.me">
+                        </div>
+                        <div class="logo-slot">
+                            <img src="logofablab.png" alt="FabLab">
+                        </div>
+                        <div class="logo-slot">
+                            <img src="Imagem do WhatsApp de 2025-07-08 à(s) 19.16.37_fd7c4a3f_clipped_rev_1.png" alt="espaces">
+                        </div>
+                        <!-- Duplicação para loop infinito -->
+                        <div class="logo-slot">
+                            <img src="logoB.png" alt="eshows">
+                        </div>
+                        <div class="logo-slot">
+                            <img src="estaff_logo_transparent.png" alt="estaff">
+                        </div>
+                        <div class="logo-slot">
+                            <img src="Blue.me.png" alt="Blue.me">
+                        </div>
+                        <div class="logo-slot">
+                            <img src="logofablab.png" alt="FabLab">
+                        </div>
+                        <div class="logo-slot">
+                            <img src="Imagem do WhatsApp de 2025-07-08 à(s) 19.16.37_fd7c4a3f_clipped_rev_1.png" alt="espaces">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1971,7 +2074,7 @@ BEGIN:VEVENT
 UID:quartertech-2025@example.com
 DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')}
 DTSTART:20250715T140000
-DTEND:20250715T180000
+DTEND:20250715T183000
 SUMMARY:QuarterTech
 DESCRIPTION:Evento QuarterTech - Resultados do Quarter\\, Metas e Objetivos\\, Novos Produtos e Tendências do Mercado
 LOCATION:Bar Brahma\\, Avenida São João\\, 677\\, República\\, São Paulo\\, SP
@@ -2001,7 +2104,7 @@ END:VCALENDAR`;
         
         function openCalendarDirectly() {
             const startDate = '20250715T140000';
-            const endDate = '20250715T180000';
+            const endDate = '20250715T183000';
             const title = encodeURIComponent('QuarterTech');
             const details = encodeURIComponent('Evento QuarterTech - Resultados do Quarter, Metas e Objetivos, Novos Produtos e Tendências do Mercado');
             const location = encodeURIComponent('Bar Brahma, Avenida São João, 677, República, São Paulo, SP');
