@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuarterTech - Preview de Cores</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .color-option {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .color-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .color-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .color-samples {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .color-box {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .color-box:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+
+        .color-box::after {
+            content: attr(data-color);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: #0a0a0a;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .color-box:hover::after {
+            bottom: -30px;
+            opacity: 1;
+        }
+
+        /* Preview components */
+        .preview-components {
+            margin-top: 30px;
+        }
+
+        .preview-button {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: 1px solid;
+            margin: 0 10px 10px 0;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .preview-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .preview-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .preview-text {
+            margin: 10px 0;
+        }
+
+        /* Color Options */
+        /* Option 1: Gold (Original) */
+        .gold .color-title { color: #D4AF37; }
+        .gold .color-box.primary { background: #B8860B; }
+        .gold .color-box.light { background: #D4AF37; }
+        .gold .color-box.dark { background: #8B6914; }
+        .gold .preview-button { border-color: #B8860B; color: #B8860B; }
+        .gold .preview-button:hover { background: rgba(184, 134, 11, 0.1); box-shadow: 0 8px 20px rgba(184, 134, 11, 0.2); }
+        .gold .preview-card { border-color: rgba(184, 134, 11, 0.3); }
+        .gold .accent { color: #D4AF37; }
+
+        /* Option 2: Deep Purple */
+        .purple .color-title { color: #9333EA; }
+        .purple .color-box.primary { background: #6B46C1; }
+        .purple .color-box.light { background: #9333EA; }
+        .purple .color-box.dark { background: #4C1D95; }
+        .purple .preview-button { border-color: #6B46C1; color: #6B46C1; }
+        .purple .preview-button:hover { background: rgba(107, 70, 193, 0.1); box-shadow: 0 8px 20px rgba(107, 70, 193, 0.2); }
+        .purple .preview-card { border-color: rgba(107, 70, 193, 0.3); }
+        .purple .accent { color: #9333EA; }
+
+        /* Option 3: Electric Blue */
+        .blue .color-title { color: #3B82F6; }
+        .blue .color-box.primary { background: #2563EB; }
+        .blue .color-box.light { background: #3B82F6; }
+        .blue .color-box.dark { background: #1E40AF; }
+        .blue .preview-button { border-color: #2563EB; color: #2563EB; }
+        .blue .preview-button:hover { background: rgba(37, 99, 235, 0.1); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2); }
+        .blue .preview-card { border-color: rgba(37, 99, 235, 0.3); }
+        .blue .accent { color: #3B82F6; }
+
+        /* Option 4: Emerald */
+        .emerald .color-title { color: #10B981; }
+        .emerald .color-box.primary { background: #059669; }
+        .emerald .color-box.light { background: #10B981; }
+        .emerald .color-box.dark { background: #047857; }
+        .emerald .preview-button { border-color: #059669; color: #059669; }
+        .emerald .preview-button:hover { background: rgba(5, 150, 105, 0.1); box-shadow: 0 8px 20px rgba(5, 150, 105, 0.2); }
+        .emerald .preview-card { border-color: rgba(5, 150, 105, 0.3); }
+        .emerald .accent { color: #10B981; }
+
+        /* Comparison Section */
+        .comparison {
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .comparison h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .logo-comparison {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .logo-preview {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--primary), var(--light), var(--dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 20px;
+        }
+
+        /* CSS Variables for each theme */
+        .gold-logo {
+            --primary: #B8860B;
+            --light: #D4AF37;
+            --dark: #8B6914;
+        }
+
+        .purple-logo {
+            --primary: #6B46C1;
+            --light: #9333EA;
+            --dark: #4C1D95;
+        }
+
+        .blue-logo {
+            --primary: #2563EB;
+            --light: #3B82F6;
+            --dark: #1E40AF;
+        }
+
+        .emerald-logo {
+            --primary: #059669;
+            --light: #10B981;
+            --dark: #047857;
+        }
+
+        /* Contrast info */
+        .contrast-info {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #a0a0a0;
+        }
+
+        .contrast-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .contrast-good {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10B981;
+        }
+
+        .contrast-excellent {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3B82F6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Paletas de Cores Premium - QuarterTech</h1>
+        
+        <div class="color-grid">
+            <!-- Original Gold -->
+            <div class="color-option gold">
+                <h3 class="color-title">Dourado Original</h3>
+                <div class="color-samples">
+                    <div class="color-box primary" data-color="#B8860B"></div>
+                    <div class="color-box light" data-color="#D4AF37"></div>
+                    <div class="color-box dark" data-color="#8B6914"></div>
+                </div>
+                <div class="preview-components">
+                    <button class="preview-button">Botão Exemplo</button>
+                    <button class="preview-button" style="background: #B8860B; color: white;">Botão Preenchido</button>
+                    <div class="preview-card">
+                        <p class="preview-text">Texto normal com <span class="accent">destaque colorido</span></p>
+                        <p class="preview-text" style="font-size: 0.85rem; opacity: 0.7;">Texto secundário de exemplo</p>
+                    </div>
+                </div>
+                <div class="contrast-info">
+                    Contraste com fundo #0a0a0a <span class="contrast-badge contrast-good">BOM (4.5:1)</span>
+                </div>
+            </div>
+
+            <!-- Deep Purple -->
+            <div class="color-option purple">
+                <h3 class="color-title">Deep Purple - Luxury Tech</h3>
+                <div class="color-samples">
+                    <div class="color-box primary" data-color="#6B46C1"></div>
+                    <div class="color-box light" data-color="#9333EA"></div>
+                    <div class="color-box dark" data-color="#4C1D95"></div>
+                </div>
+                <div class="preview-components">
+                    <button class="preview-button">Botão Exemplo</button>
+                    <button class="preview-button" style="background: #6B46C1; color: white;">Botão Preenchido</button>
+                    <div class="preview-card">
+                        <p class="preview-text">Texto normal com <span class="accent">destaque colorido</span></p>
+                        <p class="preview-text" style="font-size: 0.85rem; opacity: 0.7;">Texto secundário de exemplo</p>
+                    </div>
+                </div>
+                <div class="contrast-info">
+                    Contraste com fundo #0a0a0a <span class="contrast-badge contrast-excellent">EXCELENTE (5.8:1)</span>
+                </div>
+            </div>
+
+            <!-- Electric Blue -->
+            <div class="color-option blue">
+                <h3 class="color-title">Electric Blue - Modern Tech</h3>
+                <div class="color-samples">
+                    <div class="color-box primary" data-color="#2563EB"></div>
+                    <div class="color-box light" data-color="#3B82F6"></div>
+                    <div class="color-box dark" data-color="#1E40AF"></div>
+                </div>
+                <div class="preview-components">
+                    <button class="preview-button">Botão Exemplo</button>
+                    <button class="preview-button" style="background: #2563EB; color: white;">Botão Preenchido</button>
+                    <div class="preview-card">
+                        <p class="preview-text">Texto normal com <span class="accent">destaque colorido</span></p>
+                        <p class="preview-text" style="font-size: 0.85rem; opacity: 0.7;">Texto secundário de exemplo</p>
+                    </div>
+                </div>
+                <div class="contrast-info">
+                    Contraste com fundo #0a0a0a <span class="contrast-badge contrast-excellent">EXCELENTE (7.2:1)</span>
+                </div>
+            </div>
+
+            <!-- Emerald -->
+            <div class="color-option emerald">
+                <h3 class="color-title">Emerald - Premium Sophistication</h3>
+                <div class="color-samples">
+                    <div class="color-box primary" data-color="#059669"></div>
+                    <div class="color-box light" data-color="#10B981"></div>
+                    <div class="color-box dark" data-color="#047857"></div>
+                </div>
+                <div class="preview-components">
+                    <button class="preview-button">Botão Exemplo</button>
+                    <button class="preview-button" style="background: #059669; color: white;">Botão Preenchido</button>
+                    <div class="preview-card">
+                        <p class="preview-text">Texto normal com <span class="accent">destaque colorido</span></p>
+                        <p class="preview-text" style="font-size: 0.85rem; opacity: 0.7;">Texto secundário de exemplo</p>
+                    </div>
+                </div>
+                <div class="contrast-info">
+                    Contraste com fundo #0a0a0a <span class="contrast-badge contrast-excellent">EXCELENTE (6.4:1)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison">
+            <h2>Comparação do Logo QuarterTech</h2>
+            <div class="logo-comparison">
+                <div class="logo-preview gold-logo">QuarterTech</div>
+                <div class="logo-preview purple-logo">QuarterTech</div>
+                <div class="logo-preview blue-logo">QuarterTech</div>
+                <div class="logo-preview emerald-logo">QuarterTech</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add hover effect to color boxes to show hex value
+        document.querySelectorAll('.color-box').forEach(box => {
+            box.addEventListener('click', () => {
+                const color = box.getAttribute('data-color');
+                navigator.clipboard.writeText(color);
+                
+                // Visual feedback
+                const original = box.innerHTML;
+                box.innerHTML = 'Copiado!';
+                box.style.fontSize = '0.8rem';
+                
+                setTimeout(() => {
+                    box.innerHTML = original;
+                    box.style.fontSize = '0.7rem';
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>

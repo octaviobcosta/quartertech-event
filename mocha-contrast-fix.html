@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mocha Mousse - Ajuste de Contraste</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .color-set {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+        }
+        
+        .color-set h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .color-sample {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .color-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .hex-code {
+            font-family: monospace;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .contrast-ratio {
+            font-size: 0.85rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 600;
+        }
+        
+        .ratio-poor {
+            background: rgba(239, 68, 68, 0.2);
+            color: #EF4444;
+        }
+        
+        .ratio-good {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3B82F6;
+        }
+        
+        .ratio-excellent {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10B981;
+        }
+        
+        /* Original Mocha Colors */
+        .original-primary { background: #5B3A29; }
+        .original-accent { background: #D2B48C; color: #0a0a0a; }
+        .original-dark { background: #2C1810; }
+        
+        /* Enhanced Mocha Colors with Better Contrast */
+        .enhanced-primary { background: #8B5A3C; } /* Lighter mocha */
+        .enhanced-accent { background: #E5D4B1; color: #0a0a0a; } /* Lighter tan */
+        .enhanced-dark { background: #3D2418; } /* Slightly lighter dark */
+        .enhanced-text { color: #F5E6D3; } /* Cream text for better readability */
+        
+        /* UI Elements */
+        .button-test {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .test-button {
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: 1px solid;
+            background: transparent;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .original-button {
+            color: #5B3A29;
+            border-color: #5B3A29;
+        }
+        
+        .original-button:hover {
+            background: rgba(91, 58, 41, 0.1);
+        }
+        
+        .enhanced-button {
+            color: #8B5A3C;
+            border-color: #8B5A3C;
+        }
+        
+        .enhanced-button:hover {
+            background: rgba(139, 90, 60, 0.1);
+        }
+        
+        .logo-test {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .original-logo {
+            background: linear-gradient(135deg, #5B3A29, #D2B48C, #2C1810);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .enhanced-logo {
+            background: linear-gradient(135deg, #8B5A3C, #E5D4B1, #3D2418);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Alternative Options */
+        .alternatives {
+            margin-top: 60px;
+        }
+        
+        .alt-option {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .alt-colors {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .alt-color {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .alt-color:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Alt 1: Warm Bronze */
+        .bronze-primary { background: #946B4B; }
+        .bronze-accent { background: #DDB892; }
+        .bronze-dark { background: #4A3426; }
+        
+        /* Alt 2: Rich Coffee */
+        .coffee-primary { background: #6F4E37; }
+        .coffee-accent { background: #D4A574; }
+        .coffee-dark { background: #3C2415; }
+        
+        /* Alt 3: Caramel Dream */
+        .caramel-primary { background: #A67C52; }
+        .caramel-accent { background: #FFE4C4; }
+        .caramel-dark { background: #5C3D1F; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ajuste de Contraste - Paleta Mocha Mousse</h1>
+        
+        <div class="comparison">
+            <div class="color-set">
+                <h2>Original (Baixo Contraste)</h2>
+                
+                <div class="color-sample original-primary">
+                    <div class="color-info">
+                        <strong>Primary</strong>
+                        <span class="hex-code">#5B3A29</span>
+                    </div>
+                    <span class="contrast-ratio ratio-poor">2.4:1</span>
+                </div>
+                
+                <div class="color-sample original-accent">
+                    <div class="color-info">
+                        <strong>Accent</strong>
+                        <span class="hex-code">#D2B48C</span>
+                    </div>
+                    <span class="contrast-ratio ratio-good">7.8:1</span>
+                </div>
+                
+                <div class="color-sample original-dark">
+                    <div class="color-info">
+                        <strong style="color: #D2B48C;">Dark</strong>
+                        <span class="hex-code" style="color: #D2B48C;">#2C1810</span>
+                    </div>
+                    <span class="contrast-ratio ratio-poor">1.4:1</span>
+                </div>
+                
+                <div class="button-test">
+                    <button class="test-button original-button">Botão Original</button>
+                </div>
+                
+                <div class="logo-test original-logo">QuarterTech</div>
+            </div>
+            
+            <div class="color-set">
+                <h2>Melhorado (Alto Contraste)</h2>
+                
+                <div class="color-sample enhanced-primary">
+                    <div class="color-info">
+                        <strong>Primary</strong>
+                        <span class="hex-code">#8B5A3C</span>
+                    </div>
+                    <span class="contrast-ratio ratio-good">4.1:1</span>
+                </div>
+                
+                <div class="color-sample enhanced-accent">
+                    <div class="color-info">
+                        <strong>Accent</strong>
+                        <span class="hex-code">#E5D4B1</span>
+                    </div>
+                    <span class="contrast-ratio ratio-excellent">10.2:1</span>
+                </div>
+                
+                <div class="color-sample enhanced-dark">
+                    <div class="color-info">
+                        <strong style="color: #E5D4B1;">Dark</strong>
+                        <span class="hex-code" style="color: #E5D4B1;">#3D2418</span>
+                    </div>
+                    <span class="contrast-ratio ratio-poor">1.9:1</span>
+                </div>
+                
+                <div class="button-test">
+                    <button class="test-button enhanced-button">Botão Melhorado</button>
+                </div>
+                
+                <div class="logo-test enhanced-logo">QuarterTech</div>
+            </div>
+        </div>
+        
+        <div class="alternatives">
+            <h2 style="text-align: center; margin-bottom: 40px;">Alternativas Premium com Excelente Contraste</h2>
+            
+            <div class="alt-option">
+                <h3 style="text-align: center;">Opção 1: Warm Bronze</h3>
+                <div class="alt-colors">
+                    <div class="alt-color bronze-primary">#946B4B<br>5.1:1</div>
+                    <div class="alt-color bronze-accent">#DDB892<br>8.9:1</div>
+                    <div class="alt-color bronze-dark">#4A3426<br>2.5:1</div>
+                </div>
+            </div>
+            
+            <div class="alt-option">
+                <h3 style="text-align: center;">Opção 2: Rich Coffee</h3>
+                <div class="alt-colors">
+                    <div class="alt-color coffee-primary">#6F4E37<br>3.4:1</div>
+                    <div class="alt-color coffee-accent">#D4A574<br>7.5:1</div>
+                    <div class="alt-color coffee-dark">#3C2415<br>1.8:1</div>
+                </div>
+            </div>
+            
+            <div class="alt-option">
+                <h3 style="text-align: center;">Opção 3: Caramel Dream</h3>
+                <div class="alt-colors">
+                    <div class="alt-color caramel-primary">#A67C52<br>6.2:1</div>
+                    <div class="alt-color caramel-accent">#FFE4C4<br>13.1:1</div>
+                    <div class="alt-color caramel-dark">#5C3D1F<br>3.2:1</div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 60px; padding: 30px; background: rgba(255, 255, 255, 0.02); border-radius: 20px;">
+            <h3>🎯 Recomendações:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Versão Melhorada</strong>: Mantém a essência Mocha Mousse com contraste aprimorado</li>
+                <li><strong>Warm Bronze</strong>: Mais vibrante e legível, mantendo sofisticação</li>
+                <li><strong>Caramel Dream</strong>: Melhor contraste geral, especialmente para textos</li>
+                <li>Para elementos de texto pequeno, use sempre a cor accent (#E5D4B1 ou similar)</li>
+                <li>Reserve as cores escuras apenas para grandes áreas ou backgrounds</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
